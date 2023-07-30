@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pl-pl">
+    <head>
+        <title>Le Strona</title>
+        <link rel="stylesheet" href="navstyle.css">
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <header>
+            <div id="naglowek">Strona Dudy</div>
+            <img id="hamburger" alt="hamburger" src="hamburger.png" onclick="togglenav()">
+        </header>
+        <nav>
+            <a href="index.html" target="_parent">Strona Główna</a>
+            <a href="teorie.html" target="_parent">Teorie</a>
+        </nav>
+        <script>
+        function togglenav() {
+            let nav = document.querySelector("nav");
+            if (nav.style.display == "none") {
+                nav.style.display = "grid";
+                changeIframeSize();
+            } else {
+                nav.style.display = "none";
+                changeIframeSize();
+            }
+        }
+        
+        function changeIframeSize() {
+            let message = document.body.offsetHeight;
+            window.top.postMessage(message, "*");
+        }
+        </script>
+    </body>
+</html>

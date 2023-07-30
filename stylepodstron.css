@@ -1,5 +1,16 @@
 body {
-    background-color: black;
+    background-color: #25242C;
     color: white;
+    margin: 0px;
+}
+
+main {
+    width: 70vw;
     text-align: center;
+    margin-left: 15vw;
+}
+
+iframe {
+    border: none;
+    width: 100vw;
 }

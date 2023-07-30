@@ -1,10 +1,23 @@
 body {
-    background-color: black;
+    background-color: #2B2A33;
     color: white;
-    height: 100vh;
     margin: 0px;
-    display: flex;
-    flex-direction: column;
+}
+
+header #naglowek {
+    text-align: center;
+    font-size: 50px;
+    color:aqua;
+}
+
+#hamburger {
+    margin: 10px;
+    height: 50px;
+    float: right;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    vertical-align: middle;
 }
 
 nav {
@@ -32,16 +45,4 @@ nav a:local-link {
 
 nav a:hover {
     border-color: red;
-}
-
-main {
-    flex: 1;
-}
-
-main iframe {
-    height: 100%;
-    border: none;
-    text-align: center;
-    width: 60vw;
-    margin-left: 20vw;
 }
