@@ -1,14 +1,15 @@
 body {
     background-color: #2B2A33;
-    color: white;
-    margin: 0px;
+}
+
+header {
+    text-align: center;
+    vertical-align: middle;
 }
 
 header #naglowek {
-    text-align: center;
     font-size: 50px;
-    color:aqua;
-    display: block;
+    color: var(--header-color);
     text-decoration: none;
 }
 
@@ -29,7 +30,7 @@ nav {
 
 nav .edge {
     border-width: 0px 0px 1px 0px;
-    border-color: blue;
+    border-color: var(--secondary-header-color);
     border-style: solid;
     flex: 1;
     width: 30px;
@@ -39,8 +40,8 @@ nav a {
     flex: 15;
     border-style: solid;
     border-width: 1px;
-    border-color: blue;
-    color: blue;
+    border-color: var(--secondary-header-color);
+    color: var(--secondary-header-color);
     text-decoration: none;
     align-items: center;
     display: flex;
@@ -52,5 +53,5 @@ nav a:visited {
 }
 
 nav a:hover {
-    border-color: red;
+    border-color: #FF7B0E;
 }

@@ -1,0 +1,7 @@
+body {
+    --header-color: #0EF6F6;
+    --secondary-header-color: #00AEAE;
+    color: white;
+    margin: 0px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
