@@ -6,13 +6,21 @@
         <link rel="stylesheet" href="stylepodstron.css">
         <script src="resizeIframe.js"></script>
         <meta charset="UTF-8">
+        <script>
+        window.onload = function wiek() {
+            document.getElementById("wiek").innerHTML += (new Date().getFullYear() - 2005) + " lat";
+        }
+        </script>
     </head>
     <body>
         <iframe src="nav.html" scrolling="no"></iframe>
         <main>
             <div>
                 <h2>Witam</h2>
-                <p>Jestem Patrykiem Dudą, ale nie jestem w żaden sposób spokrewniony z Andrzejem Dudą</p>
+                <p>
+                    Jestem Patrykiem Dudą, ale nie jestem w żaden sposób spokrewniony z Andrzejem Dudą.<br>
+                    <span id="wiek">Na stan aktualny mam rocznie </span>
+                </p>
             </div>
             <div>
                 <h2>Linki</h2>
