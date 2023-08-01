@@ -9,7 +9,7 @@
     <body>
         <header>
             <a id="naglowek" href="index.html" target="_parent">Strona Dudy</a>
-            <img id="hamburger" alt="hamburger" src="hamburger.png" onclick="togglenav()">
+            <img id="hamburger" alt="hamburger" src="hamburger.png" onclick="toggleNav()">
         </header>
         <nav>
             <span class="edge"></span>
@@ -18,17 +18,29 @@
             <span class="edge"></span>
         </nav>
         <script>
-        function togglenav() {
+        function toggleNav() {
             let nav = document.querySelector("nav");
-            if (nav.style.display == "none") {
-                nav.style.display = "flex";
+            if (nav.style.display == "flex") {
+                nav.style.display = "none";
+                sessionStorage.setItem("navState", "none");
                 changeIframeSize();
             } else {
-                nav.style.display = "none";
+                nav.style.display = "flex";
+                sessionStorage.setItem("navState", "flex");
                 changeIframeSize();
             }
         }
 
+        //Maintain navigation state between html pages
+        function maintainNavState() {
+            let state = sessionStorage.getItem('navState');
+            if (state != undefined) {
+                document.querySelector("nav").style.display = state;
+            }
+        }
+        maintainNavState();
+
+        //Change navigation button when it's active
         function changeButtonShape() {
             let parentUrl = parent.document.location.pathname;
             parentUrl = /[^\/]*$/.exec(parentUrl)[0] //bierze tylko nazwe pliku
@@ -38,6 +50,7 @@
             button.style = "border-width: 1px 1px 0px 1px; background-color: " + backgroundColor + ";";
         }
         changeButtonShape();
+
 
         function changeIframeSize() {
             let message = document.body.offsetHeight;
