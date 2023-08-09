@@ -2,19 +2,19 @@
 <html lang="pl-pl">
     <head>
         <title>Le Strona</title>
-        <link rel="stylesheet" href="globalstyle.css">
+        <link rel="stylesheet" href="../globalstyle.css">
         <link rel="stylesheet" href="navstyle.css">
         <meta charset="UTF-8">
     </head>
     <body>
         <header>
-            <a id="naglowek" href="index.html" target="_parent">Strona Dudy</a>
+            <a id="naglowek" href="../index.html" target="_parent">Strona Dudy</a>
             <img id="hamburger" alt="hamburger" src="hamburger.png" onclick="toggleNav()">
         </header>
         <nav>
             <span class="edge"></span>
-            <a href="teorie.html" target="_parent">Teorie</a>
-            <a href="projekty.html" target="_parent">Projekty</a>
+            <a href="../teorie.html" target="_parent">Teorie</a>
+            <a href="../projekty.html" target="_parent">Projekty</a>
             <span class="edge"></span>
         </nav>
         <script>
@@ -44,7 +44,7 @@
         function changeButtonShape() {
             let parentUrl = parent.document.location.pathname;
             parentUrl = /[^\/]*$/.exec(parentUrl)[0] //bierze tylko nazwe pliku
-            let button = document.querySelector("nav a[href='" + parentUrl + "']");
+            let button = document.querySelector("nav a[href='../" + parentUrl + "']");
             if (button == undefined) return;
             let backgroundColor = getComputedStyle(parent.document.body).backgroundColor;
             button.style = "border-width: 1px 1px 0px 1px; background-color: " + backgroundColor + ";";

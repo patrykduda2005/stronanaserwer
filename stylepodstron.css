@@ -19,4 +19,6 @@ h2 {
 
 main a {
     color: var(--secondary-header-color);
+    text-decoration: none;
+    font-weight: bold;
 }
