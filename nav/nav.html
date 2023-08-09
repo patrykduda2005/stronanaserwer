@@ -43,10 +43,12 @@
         //Change navigation button when it's active
         function changeButtonShape() {
             let pathname = parent.document.location.pathname;
-            let category = /(?<=\/)[^\/]*(?=\/[^\/]*$)/.exec(pathname)[0] //znajduje folder w ktorym znajduje sie plik
+            let category = /(?<=\/)[^\/]*(?=\/[^\/]*$)/.exec(pathname) //znajduje folder w ktorym znajduje sie plik
+            if (category != null) category = category[0];
             let button = document.querySelector("nav a[href='../" + category + ".html']");
             if (button == null) {
-                category = /[^\/]*(?=\.html)/.exec(pathname)[0] //znajduje nazwe pliku
+                category = /[^\/]*(?=\.html)/.exec(pathname) //znajduje nazwe pliku
+                if (category != null) category = category[0];
                 button = document.querySelector("nav a[href='../" + category + ".html']");
             }
             if (button == null) return;
