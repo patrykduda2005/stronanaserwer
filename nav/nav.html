@@ -53,7 +53,8 @@
             }
             if (button == null) return;
             let backgroundColor = getComputedStyle(parent.document.body).backgroundColor;
-            button.style = "border-width: 1px 1px 0px 1px; background-color: " + backgroundColor + ";";
+            let style = (document.body.clientWidth > 700 ? "border-width: 1px 1px 0px 1px;" : "") + "background-color: " + backgroundColor + ";";
+            button.style = style;
         }
         changeButtonShape();
 
@@ -63,6 +64,7 @@
             window.top.postMessage(message, "*");
         }
         window.addEventListener('load', changeIframeSize(), false);
+        //TODO: zmieniac wysokosc iframe'a dynamicznie (onresize)
         </script>
     </body>
 </html>
