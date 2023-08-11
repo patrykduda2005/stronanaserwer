@@ -13,7 +13,7 @@ iframe {
     width: 100vw;
 }
 
-h2 {
+h2, h3  {
     color: var(--header-color);
 }
 
