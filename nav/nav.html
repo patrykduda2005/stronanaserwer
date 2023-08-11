@@ -53,7 +53,7 @@
             }
             if (button == null) return;
             let backgroundColor = getComputedStyle(parent.document.body).backgroundColor;
-            let style = (document.body.clientWidth > 700 ? "border-width: 1px 1px 0px 1px;" : "") + "background-color: " + backgroundColor + ";";
+            let style = (window.screen.width > 700 ? "border-width: 1px 1px 0px 1px;" : "") + "background-color: " + backgroundColor + ";";
             button.style = style;
         }
         changeButtonShape();
