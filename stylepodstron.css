@@ -4,8 +4,15 @@ body {
 
 main {
     width: 70vw;
-    text-align: center;
+    text-align: left;
     margin-left: 15vw;
+}
+
+footer {
+    background-color: #2B2A33;
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
 }
 
 iframe {
@@ -21,4 +28,19 @@ main a {
     color: var(--secondary-header-color);
     text-decoration: none;
     font-weight: bold;
+}
+
+main .img {
+    float: right;
+    border: solid 2px gray;
+    padding: 7px;
+    text-align: center;
+}
+
+.img img {
+    width: 100%;
+}
+
+main p {
+    text-align: left;
 }
