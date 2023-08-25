@@ -21,7 +21,6 @@ iframe {
 
 h2, h3  {
     color: var(--header-color);
-    clear: both;
 }
 
 main a {
@@ -30,18 +29,19 @@ main a {
     font-weight: bold;
 }
 
-main p {
-    margin: 5em;
-}
-
 main .img {
-    float: left;
+    float: right;
     border: solid 2px gray;
     padding: 7px;
     text-align: center;
     vertical-align: middle;
+    margin: 1em;
 }
 
 .img img {
     width: 100%;
+}
+
+main ul {
+    list-style-type: square;
 }
