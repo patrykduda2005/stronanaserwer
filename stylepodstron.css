@@ -4,7 +4,6 @@ body {
 
 main {
     width: 70vw;
-    text-align: left;
     margin-left: 15vw;
 }
 
@@ -22,6 +21,7 @@ iframe {
 
 h2, h3  {
     color: var(--header-color);
+    clear: both;
 }
 
 main a {
@@ -30,17 +30,18 @@ main a {
     font-weight: bold;
 }
 
+main p {
+    margin: 5em;
+}
+
 main .img {
-    float: right;
+    float: left;
     border: solid 2px gray;
     padding: 7px;
     text-align: center;
+    vertical-align: middle;
 }
 
 .img img {
     width: 100%;
-}
-
-main p {
-    text-align: left;
 }
