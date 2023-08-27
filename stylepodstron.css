@@ -46,3 +46,8 @@ main .img {
 main ul {
     list-style-type: square;
 }
+
+a:hover {
+    color: #FF7B0E;
+}
+
