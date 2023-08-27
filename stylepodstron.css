@@ -9,9 +9,10 @@ main {
 
 footer {
     background-color: #2B2A33;
-    position: fixed;
+    position: sticky;
+    padding: 0.25em;
     bottom: 0px;
-    width: 100%;
+    width: calc(100% - 0.5em);
 }
 
 iframe {
