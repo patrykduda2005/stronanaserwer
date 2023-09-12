@@ -5,11 +5,12 @@ body {
 main {
     width: 70vw;
     margin-left: 15vw;
+    margin-bottom: 5em;
 }
 
 footer {
     background-color: #2B2A33;
-    position: sticky;
+    position: fixed;
     padding: 0.25em;
     bottom: 0px;
     width: calc(100% - 0.5em);
@@ -51,3 +52,8 @@ a:hover {
     color: #FF7B0E;
 }
 
+.credits {
+    margin: 10px;
+    background-color: var(--secondary-header-color);
+    text-align: center;
+}
