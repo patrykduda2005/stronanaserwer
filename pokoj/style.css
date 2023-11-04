@@ -1,0 +1,24 @@
+main {
+    margin: 0;
+}
+
+#container {
+    width: 800px;
+    height: 100vw;
+    overflow-x: hidden;
+    overflow-y: auto;
+    transform: rotate(-90deg) translateY(-55vw);
+    transform-origin: right top;
+}
+
+#drzwi {
+    width: 100vw;
+    height: 200vw;
+    transform: rotate(-90deg);
+}
+
+#drzwi img {
+    width: 50%;
+    height: 20%;
+    transform: translateY(150%) translateX(150%);
+}
