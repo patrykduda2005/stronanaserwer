@@ -1,24 +1,22 @@
 main {
-    margin: 0;
+    text-align: center;
 }
 
-#container {
-    width: 800px;
-    height: 100vw;
-    overflow-x: hidden;
-    overflow-y: auto;
-    transform: rotate(-90deg) translateY(-55vw);
-    transform-origin: right top;
+@keyframes move_right {
+    from {
+        transform: translateX(0px);
+    }
+    to {
+        transform: translateX(600px);
+    }
 }
 
 #drzwi {
-    width: 100vw;
-    height: 200vw;
-    transform: rotate(-90deg);
+    transform: translateX(600px);
+    animation-name: move_right;
+    animation-duration: 4s;
 }
 
-#drzwi img {
-    width: 50%;
-    height: 20%;
-    transform: translateY(150%) translateX(150%);
+#pokoj {
+    position: absolute;
 }
