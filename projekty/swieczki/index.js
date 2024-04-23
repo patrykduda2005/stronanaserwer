@@ -4,7 +4,7 @@ const load_sprites = (url, amount) => {
     return new Promise((resolve, reject) => {
         var image = new Image();
         image.onload = () => {
-            const widthperone = image.width / amount;
+            const widthperone = 200;
             let promises = [];
             for (let i = 0; i < amount; i++) {
                 promises[i] = createImageBitmap(image, i * widthperone, 0, widthperone, image.height);
@@ -59,9 +59,47 @@ const runWasm = async () => {
     var i = 0;
     setInterval(() => {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.drawImage(turningOff[i], 0, 0);
+        ctx.drawImage(turnedOn[i], 0, 0, 100, 150);
+        ctx.drawImage(turnedOn[i], 50, 0, 100, 150);
+        ctx.drawImage(turnedOn[i], 100, 0, 100, 150);
+        ctx.drawImage(turnedOn[i], 150, 0, 100, 150);
+        ctx.drawImage(turnedOn[i], 200, 0, 100, 150);
+        ctx.drawImage(turnedOn[i], 250, 0, 100, 150);
+        ctx.drawImage(turnedOn[i], 300, 0, 100, 150);
+        ctx.drawImage(turnedOn[i], 350, 0, 100, 150);
+        ctx.drawImage(turnedOn[i], 400, 0, 100, 150);
+        ctx.drawImage(turnedOn[i], 450, 0, 100, 150);
+
+        ctx.drawImage(turnedOn[i], 25 + 0*133/2, 37/1.5, 100, 150);
+        ctx.drawImage(turnedOn[i], 25 + 1*133/2, 37/1.5, 100, 150);
+        ctx.drawImage(turnedOff[0], 25 + 2*133/2, 37/1.5, 100, 150);
+        ctx.drawImage(turnedOn[i], 25 + 3*133/2, 37/1.5, 100, 150);
+        ctx.drawImage(turnedOn[i], 25 + 4*133/2, 37/1.5, 100, 150);
+        ctx.drawImage(turnedOn[i], 25 + 5*133/2, 37/1.5, 100, 150);
+        ctx.drawImage(turnedOn[i], 25 + 6*133/2, 37/1.5, 100, 150);
+
+
+        ctx.drawImage(turnedOn[i], 116/2 + 0*133/2, 75/1.5, 100, 150);
+        ctx.drawImage(turnedOn[i], 116/2 + 1*133/2, 75/1.5, 100, 150);
+        ctx.drawImage(turnedOn[i], 116/2 + 2*133/2, 75/1.5, 100, 150);
+        ctx.drawImage(turnedOn[i], 116/2 + 3*133/2, 75/1.5, 100, 150);
+        ctx.drawImage(turnedOff[0], 116/2 + 4*133/2, 75/1.5, 100, 150);
+        ctx.drawImage(turnedOff[0], 116/2 + 5*133/2, 75/1.5, 100, 150);
+
+
+        ctx.drawImage(turnedOn[i], 182/2 + 0*133/2, 112/1.5, 100, 150);
+        ctx.drawImage(turnedOn[i], 182/2 + 1*133/2, 112/1.5, 100, 150);
+        ctx.drawImage(turnedOn[i], 182/2 + 2*133/2, 112/1.5, 100, 150);
+        ctx.drawImage(turnedOn[i], 182/2 + 3*133/2, 112/1.5, 100, 150);
+        ctx.drawImage(turnedOff[0], 182/2 + 4*133/2, 112/1.5, 100, 150);
+
+
+        ctx.drawImage(turnedOn[i], 248/2 + 0*133/2, 150/1.5, 100, 150);
+        ctx.drawImage(turnedOff[0], 248/2 + 1*133/2, 150/1.5, 100, 150);
+        ctx.drawImage(turnedOn[i], 248/2 + 2*133/2, 150/1.5, 100, 150);
+        ctx.drawImage(turnedOn[i], 248/2 + 3*133/2, 150/1.5, 100, 150);
         i++;
-        if (i > 5) i = 0;
+        if (i > 4) i = 0;
     }, 250);
 }
 
