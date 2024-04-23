@@ -1,0 +1,14 @@
+{
+  "name": "swieczki",
+  "version": "0.1.0",
+  "files": [
+    "swieczki_bg.wasm",
+    "swieczki.js",
+    "swieczki.d.ts"
+  ],
+  "module": "swieczki.js",
+  "types": "swieczki.d.ts",
+  "sideEffects": [
+    "./snippets/*"
+  ]
+}
