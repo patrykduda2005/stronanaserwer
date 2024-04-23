@@ -49,6 +49,7 @@ const runWasm = async () => {
     const turnedOff = await load_sprites("./img/zgaszony.png", 1);
     const turnedOn = await load_sprites("./img/swieci-sheet.png", 5);
     const turningOff = await load_sprites("./img/zgaszenie-sheet.png", 6);
+    const krzak = await load_sprites("./img/krzak_trollface.png", 1);
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -58,7 +59,10 @@ const runWasm = async () => {
 
     var i = 0;
     setInterval(() => {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(krzak[0], 0, 0, canvas.width, canvas.height);
+        ctx.drawImage(krzak[0], 200, 0, canvas.width, canvas.height);
+        ctx.drawImage(krzak[0], 400, 0, canvas.width, canvas.height);
+
         ctx.drawImage(turnedOn[i], 0, 0, 100, 150);
         ctx.drawImage(turnedOn[i], 50, 0, 100, 150);
         ctx.drawImage(turnedOn[i], 100, 0, 100, 150);
