@@ -1,0 +1,16 @@
+[package]
+name = "swieczki"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+wasm-bindgen = "0.2.92"
+
+[[bin]]
+name = "src"
+path = "main.rs"
+
+[lib]
+crate-type = ["cdylib"]

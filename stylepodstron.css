@@ -57,3 +57,7 @@ a:hover {
     background-color: var(--secondary-header-color);
     text-align: center;
 }
+
+canvas {
+    border: 1px solid var(--secondary-header-color);
+}
