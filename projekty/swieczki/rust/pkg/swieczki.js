@@ -25,43 +25,69 @@ export function get_output_buffer_pointer() {
     return ret >>> 0;
 }
 
-const CanvasFinalization = (typeof FinalizationRegistry === 'undefined')
+const CandlesFinalization = (typeof FinalizationRegistry === 'undefined')
     ? { register: () => {}, unregister: () => {} }
-    : new FinalizationRegistry(ptr => wasm.__wbg_canvas_free(ptr >>> 0));
+    : new FinalizationRegistry(ptr => wasm.__wbg_candles_free(ptr >>> 0));
 /**
 */
-export class Canvas {
+export class Candles {
 
     static __wrap(ptr) {
         ptr = ptr >>> 0;
-        const obj = Object.create(Canvas.prototype);
+        const obj = Object.create(Candles.prototype);
         obj.__wbg_ptr = ptr;
-        CanvasFinalization.register(obj, obj.__wbg_ptr, obj);
+        CandlesFinalization.register(obj, obj.__wbg_ptr, obj);
         return obj;
     }
 
     __destroy_into_raw() {
         const ptr = this.__wbg_ptr;
         this.__wbg_ptr = 0;
-        CanvasFinalization.unregister(this);
+        CandlesFinalization.unregister(this);
         return ptr;
     }
 
     free() {
         const ptr = this.__destroy_into_raw();
-        wasm.__wbg_canvas_free(ptr);
+        wasm.__wbg_candles_free(ptr);
     }
     /**
-    * @returns {Canvas}
+    * @returns {Candles}
     */
     static new() {
-        const ret = wasm.canvas_new();
-        return Canvas.__wrap(ret);
+        const ret = wasm.candles_new();
+        return Candles.__wrap(ret);
     }
     /**
     */
-    update_data() {
-        wasm.canvas_update_data(this.__wbg_ptr);
+    update_buffer() {
+        wasm.candles_update_buffer(this.__wbg_ptr);
+    }
+    /**
+    */
+    tick_frame() {
+        wasm.candles_tick_frame(this.__wbg_ptr);
+    }
+    /**
+    */
+    tick() {
+        wasm.candles_tick(this.__wbg_ptr);
+    }
+    /**
+    * @param {number} i
+    */
+    set_on_fire(i) {
+        wasm.candles_set_on_fire(this.__wbg_ptr, i);
+    }
+    /**
+    */
+    add_candle() {
+        wasm.candles_add_candle(this.__wbg_ptr);
+    }
+    /**
+    */
+    reset_all() {
+        wasm.candles_reset_all(this.__wbg_ptr);
     }
 }
 

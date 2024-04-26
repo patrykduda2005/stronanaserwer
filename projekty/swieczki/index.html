@@ -13,6 +13,16 @@
         <main style="text-align: center;">
             <canvas id="canvas" width="1200" height="550" style="width: 100%;">
             </canvas>
+            <button onclick="advanceATick()">Advance Time</button>
+            <button onclick="addCandle()">Add a candle !</button>
+            <button onclick="getSaveString()">Get save string</button>
+            <button onclick="reset()">Reset</button>
+            <p id="tick">Tick: 0</p>
+            <p id="savestring">Save string:</p>
+            <form action="javascript:" onsubmit="processSaveString(this[0].value)">
+                <input id="" type="text" placeholder="Read a save string..">
+                <button>-></button>
+            </form>
         </main>
     </body>
 </html>

@@ -6,15 +6,31 @@
 export function get_output_buffer_pointer(): number;
 /**
 */
-export class Canvas {
+export class Candles {
   free(): void;
 /**
-* @returns {Canvas}
+* @returns {Candles}
 */
-  static new(): Canvas;
+  static new(): Candles;
 /**
 */
-  update_data(): void;
+  update_buffer(): void;
+/**
+*/
+  tick_frame(): void;
+/**
+*/
+  tick(): void;
+/**
+* @param {number} i
+*/
+  set_on_fire(i: number): void;
+/**
+*/
+  add_candle(): void;
+/**
+*/
+  reset_all(): void;
 }
 
 export type InitInput = RequestInfo | URL | Response | BufferSource | WebAssembly.Module;
@@ -22,9 +38,14 @@ export type InitInput = RequestInfo | URL | Response | BufferSource | WebAssembl
 export interface InitOutput {
   readonly memory: WebAssembly.Memory;
   readonly get_output_buffer_pointer: () => number;
-  readonly __wbg_canvas_free: (a: number) => void;
-  readonly canvas_new: () => number;
-  readonly canvas_update_data: (a: number) => void;
+  readonly __wbg_candles_free: (a: number) => void;
+  readonly candles_new: () => number;
+  readonly candles_update_buffer: (a: number) => void;
+  readonly candles_tick_frame: (a: number) => void;
+  readonly candles_tick: (a: number) => void;
+  readonly candles_set_on_fire: (a: number, b: number) => void;
+  readonly candles_add_candle: (a: number) => void;
+  readonly candles_reset_all: (a: number) => void;
 }
 
 export type SyncInitInput = BufferSource | WebAssembly.Module;

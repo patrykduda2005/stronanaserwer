@@ -1,12 +1,15 @@
 use wasm_bindgen::prelude::wasm_bindgen;
 
-const CANVAS_WIDTH: usize = 200;
-const CANVAS_HEIGHT: usize = 200;
-const CANDLE_HEIGHT: u32 = 11;
-const CANDLE_WIDTH: u32 = 6;
+const OUTPUT_BUFFER_SIZE: usize = 64;
+static mut OUTPUT_BUFFER: [u8; OUTPUT_BUFFER_SIZE] = [1; OUTPUT_BUFFER_SIZE];
 
-const OUTPUT_BUFFER_SIZE: usize = CANVAS_WIDTH*CANVAS_HEIGHT*4;
-static mut OUTPUT_BUFFER: [u8; OUTPUT_BUFFER_SIZE] = [0; OUTPUT_BUFFER_SIZE];
+const CANDLE_TIME: u8 = 5;
+
+#[wasm_bindgen]
+extern "C" {
+    #[wasm_bindgen(js_namespace = console)]
+    fn log(s: &str);
+}
 
 #[wasm_bindgen]
 pub fn get_output_buffer_pointer() -> *const u8 {
@@ -15,84 +18,146 @@ pub fn get_output_buffer_pointer() -> *const u8 {
     }
 }
 
-#[wasm_bindgen]
-struct Canvas {
-    board: [(u8, u8, u8); CANVAS_WIDTH * CANVAS_HEIGHT],
+#[derive(Clone, Copy, Debug, PartialEq)]
+#[allow(dead_code)]
+enum CandleState {
+    TurnedOn = 0,
+    TurningOff = 1,
+    TurnedOff = 2,
 }
 
-impl Canvas {
-    fn set_pixel(&mut self, coord: (u32, u32), color: (u8, u8, u8)) {
-        let idx: usize = coord.0 as usize + CANVAS_WIDTH * coord.1 as usize;
-        self.board[idx] = color;
-    }
+#[derive(Clone)]
+#[allow(dead_code)]
+struct Candle {
+    frame: u8,
+    state: CandleState,
+    time_left: u8,
+}
 
-    fn draw_candle(&mut self, coord: (u32, u32)) {
-        let red: (u8, u8, u8) = (255, 0, 0);
-        let orange: (u8, u8, u8) = (255, 205, 0);
-        let yellow: (u8, u8, u8) = (255, 237, 0);
-        let white: (u8, u8, u8) = (255, 255, 255);
-        let candle: [[Option<(u8, u8, u8)>; CANDLE_WIDTH as usize]; CANDLE_HEIGHT as usize] = [
-        [None, None, Some(yellow), Some(yellow), None, None],
-        [None, Some(yellow), Some(orange), Some(orange), Some(yellow), None],
-        [Some(yellow), Some(orange), Some(red), Some(red), Some(orange), Some(yellow)],
-        [Some(yellow), Some(orange), Some(red), Some(red), Some(orange), Some(yellow)],
-        [Some(yellow), Some(orange), Some(red), Some(red), Some(orange), Some(yellow)],
-        [Some(yellow), Some(orange), Some(white), Some(white), Some(orange), Some(yellow)],
-        [None, Some(yellow), Some(white), Some(white), Some(yellow), None],
-        [None, None, Some(white), Some(white), None, None],
-        [None, None, Some(white), Some(white), None, None],
-        [None, None, Some(white), Some(white), None, None],
-        [None, None, Some(white), Some(white), None, None],
-        ];
-        candle.iter().enumerate().for_each(|(iy, x)| x.iter().enumerate().for_each(|(ix, y)|
-            if let Some(kolor) = y {
-                self.set_pixel((ix as u32 + coord.0, iy as u32 + coord.1), *kolor);
-            }
-        ));
-    }
-    
-    fn draw_all_candles(&mut self) {
-        self.draw_candle((0,0));
-        self.draw_candle((1*CANDLE_WIDTH + 1,0));
-        self.draw_candle((2*(CANDLE_WIDTH + 1) ,0));
-        self.draw_candle((3*(CANDLE_WIDTH + 1) ,0));
-        self.draw_candle((4*(CANDLE_WIDTH + 1) ,0));
-        self.draw_candle((5*(CANDLE_WIDTH + 1) ,0));
-        self.draw_candle((6*(CANDLE_WIDTH + 1) ,0));
-        self.draw_candle((7*(CANDLE_WIDTH + 1) ,0));
-        self.draw_candle((8*(CANDLE_WIDTH + 1) ,0));
-        self.draw_candle((9*(CANDLE_WIDTH + 1) ,0));
-
-        self.draw_candle((0 + CANDLE_WIDTH/2, CANDLE_HEIGHT));
-        self.draw_candle((CANDLE_WIDTH + 1 + CANDLE_WIDTH/2,  CANDLE_HEIGHT));
-        self.draw_candle((2*(CANDLE_WIDTH + 1 + CANDLE_WIDTH/2) ,CANDLE_HEIGHT));
-        self.draw_candle((3*(CANDLE_WIDTH + 1 + CANDLE_WIDTH/2) ,CANDLE_HEIGHT));
-        self.draw_candle((4*(CANDLE_WIDTH + 1 + CANDLE_WIDTH/2) ,CANDLE_HEIGHT));
-        self.draw_candle((5*(CANDLE_WIDTH + 1 + CANDLE_WIDTH/2) ,CANDLE_HEIGHT));
-        self.draw_candle((6*(CANDLE_WIDTH + 1 + CANDLE_WIDTH/2) ,CANDLE_HEIGHT));
+impl Default for Candle {
+    fn default() -> Self {
+        Candle {
+            frame: 0,
+            state: CandleState::TurnedOff,
+            time_left: CANDLE_TIME,
+        }
     }
 }
 
+#[allow(dead_code)]
+impl Candle {
+    fn new(frame: u8, state: CandleState, time_left: u8) -> Self {
+        Candle {
+            frame,
+            state,
+            time_left,
+        }
+    }
+
+    fn progress_frame(&mut self) {
+        match self.state {
+            CandleState::TurnedOn => {
+                if self.frame != 4 {
+                    self.frame += 1;
+                } else {
+                    self.frame = 0;
+                }
+            },
+            CandleState::TurningOff => {
+                if self.frame != 5 {
+                    self.frame += 1;
+                } else {
+                    self.frame = 0;
+                    self.state = CandleState::TurnedOff;
+                }
+            },
+            CandleState::TurnedOff => (),
+        }
+    }
+
+    fn tick(&mut self) {
+        self.time_left -= 1;
+        if self.time_left == 0 && self.state == CandleState::TurnedOn {
+            self.state = CandleState::TurningOff;
+            self.frame = 0;
+        } 
+    }
+
+    fn set_on_fire(&mut self) {
+        self.state = CandleState::TurnedOn;
+        self.frame = 0;
+        self.time_left = CANDLE_TIME;
+    }
+
+    fn get_js_info(&self) -> (u8, u8) {
+        return (self.state as u8, self.frame);
+    }
+
+    fn reset(&mut self) {
+        if self.state == CandleState::TurnedOn {
+            self.state = CandleState::TurningOff;
+        }
+        self.time_left = CANDLE_TIME;
+        self.frame = 0;
+    }
+}
+
 
 #[wasm_bindgen]
-impl Canvas {
+struct Candles(Vec<Candle>);
+
+impl Default for Candles {
+    fn default() -> Self {
+        Candles(
+            vec![Candle::default(); OUTPUT_BUFFER_SIZE/2],
+        )
+    }
+}
+
+#[wasm_bindgen]
+#[allow(dead_code)]
+impl Candles {
     pub fn new() -> Self {
-        Self {
-            board: [(0 as u8, 0 as u8, 0 as u8); CANVAS_WIDTH * CANVAS_HEIGHT],
+        Candles::default()
+    }
+
+    pub fn update_buffer(&self) {
+        let mut temp_buffer = [0; OUTPUT_BUFFER_SIZE];
+        self.0.iter().enumerate().for_each(|(i, x)| {
+            let tuple = x.get_js_info();
+            temp_buffer[i*2] = tuple.0;
+            temp_buffer[i*2+1] = tuple.1;
+        });
+        unsafe {
+            OUTPUT_BUFFER = temp_buffer;
         }
     }
 
-    pub fn update_data(&mut self) {
-        self.draw_all_candles();
-        let mut output = [0; OUTPUT_BUFFER_SIZE];
-        for (i, x) in self.board.iter().enumerate() {
-            output[i*4 + 0] = x.0;
-            output[i*4 + 1] = x.1;
-            output[i*4 + 2] = x.2;
-            output[i*4 + 3] = 255;
-        }
-        unsafe {
-            OUTPUT_BUFFER = output;
+    pub fn tick_frame(&mut self) {
+        self.0.iter_mut().for_each(|x| x.progress_frame());
+    }
+
+    pub fn tick(&mut self) {
+        self.0.iter_mut().for_each(|x| x.tick());
+    }
+
+    pub fn set_on_fire(&mut self, i: usize) {
+        if i > 31 {return}
+        self.0[i].set_on_fire();
+    }
+
+    pub fn add_candle(&mut self) {
+        for c in self.0.iter_mut() {
+            if c.state == CandleState::TurnedOn {
+                continue;
+            }
+            c.set_on_fire();
+            return;
         }
     }
+
+    pub fn reset_all(&mut self) {
+        self.0.iter_mut().for_each(|c| c.reset());
+    }
+
 }
