@@ -31,6 +31,13 @@ export class Candles {
 /**
 */
   reset_all(): void;
+/**
+*/
+  cease_turning_off(): void;
+/**
+* @param {number} time
+*/
+  change_default_candle_time(time: number): void;
 }
 
 export type InitInput = RequestInfo | URL | Response | BufferSource | WebAssembly.Module;
@@ -46,6 +53,8 @@ export interface InitOutput {
   readonly candles_set_on_fire: (a: number, b: number) => void;
   readonly candles_add_candle: (a: number) => void;
   readonly candles_reset_all: (a: number) => void;
+  readonly candles_cease_turning_off: (a: number) => void;
+  readonly candles_change_default_candle_time: (a: number, b: number) => void;
 }
 
 export type SyncInitInput = BufferSource | WebAssembly.Module;

@@ -10,3 +10,5 @@ export function candles_tick(a: number): void;
 export function candles_set_on_fire(a: number, b: number): void;
 export function candles_add_candle(a: number): void;
 export function candles_reset_all(a: number): void;
+export function candles_cease_turning_off(a: number): void;
+export function candles_change_default_candle_time(a: number, b: number): void;

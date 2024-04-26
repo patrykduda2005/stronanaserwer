@@ -89,6 +89,17 @@ export class Candles {
     reset_all() {
         wasm.candles_reset_all(this.__wbg_ptr);
     }
+    /**
+    */
+    cease_turning_off() {
+        wasm.candles_cease_turning_off(this.__wbg_ptr);
+    }
+    /**
+    * @param {number} time
+    */
+    change_default_candle_time(time) {
+        wasm.candles_change_default_candle_time(this.__wbg_ptr, time);
+    }
 }
 
 async function __wbg_load(module, imports) {

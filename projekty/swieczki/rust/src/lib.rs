@@ -32,6 +32,7 @@ struct Candle {
     frame: u8,
     state: CandleState,
     time_left: u8,
+    default_candle_time: u8,
 }
 
 impl Default for Candle {
@@ -39,18 +40,20 @@ impl Default for Candle {
         Candle {
             frame: 0,
             state: CandleState::TurnedOff,
-            time_left: CANDLE_TIME,
+            time_left: 5,
+            default_candle_time: CANDLE_TIME,
         }
     }
 }
 
 #[allow(dead_code)]
 impl Candle {
-    fn new(frame: u8, state: CandleState, time_left: u8) -> Self {
+    fn new(frame: u8, state: CandleState, time_left: u8, default_candle_time: u8) -> Self {
         Candle {
             frame,
             state,
             time_left,
+            default_candle_time,
         }
     }
 
@@ -77,7 +80,7 @@ impl Candle {
 
     fn tick(&mut self) {
         self.time_left -= 1;
-        if self.time_left == 0 && self.state == CandleState::TurnedOn {
+        if self.time_left <= 0 && self.state == CandleState::TurnedOn {
             self.state = CandleState::TurningOff;
             self.frame = 0;
         } 
@@ -86,7 +89,7 @@ impl Candle {
     fn set_on_fire(&mut self) {
         self.state = CandleState::TurnedOn;
         self.frame = 0;
-        self.time_left = CANDLE_TIME;
+        self.time_left = self.default_candle_time;
     }
 
     fn get_js_info(&self) -> (u8, u8) {
@@ -99,6 +102,16 @@ impl Candle {
         }
         self.time_left = CANDLE_TIME;
         self.frame = 0;
+    }
+
+    fn set_turned_off(&mut self) {
+        self.state = CandleState::TurnedOff;
+        self.frame = 0;
+        self.time_left = 0;
+    }
+
+    fn change_default_candle_time(&mut self, time: u8) {
+        self.default_candle_time = time;
     }
 }
 
@@ -158,6 +171,19 @@ impl Candles {
 
     pub fn reset_all(&mut self) {
         self.0.iter_mut().for_each(|c| c.reset());
+    }
+
+    pub fn cease_turning_off(&mut self) {
+        for c in self.0.iter_mut() {
+            if c.state != CandleState::TurningOff {
+                continue;
+            }
+            c.set_turned_off();
+        }
+    }
+
+    pub fn change_default_candle_time(&mut self, time: u8) {
+        self.0.iter_mut().for_each(|c| c.change_default_candle_time(time))
     }
 
 }

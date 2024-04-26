@@ -17,12 +17,21 @@
             <button onclick="addCandle()">Add a candle !</button>
             <button onclick="getSaveString()">Get save string</button>
             <button onclick="reset()">Reset</button>
+            <button onclick="addPause()">Zrób pauze (\)</button>
             <p id="tick">Tick: 0</p>
-            <p id="savestring">Save string:</p>
+            <hr>
+            <div>
+            <button onclick="changeCandleTime(1)">Zwiększ czas palenia sie świeczki</button>
+                <p id="candletime">Czas palenia: 5 ticków</p>
+            <button onclick="changeCandleTime(-1)">Zmniejsz czas palenia sie świeczki</button>
+            </div>
+            <hr>
+            <div id="savestring" style="word-break: break-all;">Save string:</div>
             <form action="javascript:" onsubmit="processSaveString(this[0].value)">
                 <input id="" type="text" placeholder="Read a save string..">
                 <button>-></button>
             </form>
+            <p>Ej czy wiedziałeś ze '\' robi przerwe w odczytywaniu save stringa ? '|' robi dluzszą, a '/' najdluzszą !</p>
         </main>
     </body>
 </html>

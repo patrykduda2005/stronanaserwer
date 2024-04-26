@@ -3,6 +3,8 @@ window.addCandle = addCandle;
 window.getSaveString = getSaveString;
 window.processSaveString = processSaveString;
 window.reset = reset;
+window.addPause = addPause;
+window.changeCandleTime = changeCandleTime;
 
 import wasmInit, {Candles} from './rust/pkg/swieczki.js'
 const CANDLE_WIDTH = 200;
@@ -40,11 +42,13 @@ const drawFrame = () => {
         const candle_hor_gap = 1/2; //in candle widths
         const candle_ver_gap = 1/6; //in candle heights
         const ten_to_seven = (8*candle_width/6) //conversion from 10 candles to 7
-        ctx.drawImage(krzak[0], 0, 0, canvas.width, canvas.height);
-        ctx.drawImage(krzak[0], 200, 0, canvas.width, canvas.height);
-        ctx.drawImage(krzak[0], 400, 0, canvas.width, canvas.height);
-        ctx.drawImage(krzak[0], 600, 0, canvas.width, canvas.height);
-        ctx.drawImage(krzak[0], 800, 0, canvas.width, canvas.height);
+        //ctx.drawImage(krzak[0], 0, 0, canvas.width, canvas.height);
+        //ctx.drawImage(krzak[0], 200, 0, canvas.width, canvas.height);
+        //ctx.drawImage(krzak[0], 400, 0, canvas.width, canvas.height);
+        //ctx.drawImage(krzak[0], 600, 0, canvas.width, canvas.height);
+        //ctx.drawImage(krzak[0], 800, 0, canvas.width, canvas.height);
+        ctx.fillStyle = "#B9A7BB";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
 
         ctx.drawImage(assets[candleData[44]][candleData[45]], 0*candle_width*candle_hor_gap, 0, candle_width, candle_height);
         ctx.drawImage(assets[candleData[46]][candleData[47]], 1*candle_width*candle_hor_gap, 0, candle_width, candle_height);
@@ -88,6 +92,7 @@ const drawFrame = () => {
 }
 
 
+var candleTime = 5;
 var saveString = "";
 var tick = 0;
 function advanceATick() {
@@ -107,18 +112,50 @@ function getSaveString() {
     document.getElementById("savestring").innerHTML = "Save string: " + saveString;
 }
 
-function processSaveString(ss) {
+function changeCandleTime(change) {
+    candleTime += change;
+    if (candleTime == -1) candleTime = 255;
+    else if (candleTime == 256) candleTime = 0;
+    candles.change_default_candle_time(candleTime);
+    if (change == 1) saveString+=">";
+    else if (change == -1) saveString+="<";
+    document.getElementById("candletime").innerHTML = "Czas palenia: " + candleTime + " ticków";
+}
+
+async function processSaveString(ss) {
     const sstab = Array.from(ss);
-    sstab.forEach(char => {
+    for (const char of sstab) {
         if (char == ".") {
             advanceATick();
         } else if (char == "^") {
             addCandle();
+        } else if (char == "\\") {
+            candles.cease_turning_off();
+            drawFrame();
+            await new Promise(r => setTimeout(r, 100));
+        } else if (char == "|") {
+            candles.cease_turning_off();
+            drawFrame();
+            await new Promise(r => setTimeout(r, 1000));
+        } else if (char == "/") {
+            candles.cease_turning_off();
+            drawFrame();
+            await new Promise(r => setTimeout(r, 10000));
+        } else if (char == ">") {
+            changeCandleTime(1);
+        } else if (char == "<") {
+            changeCandleTime(-1);
         }
-    })
+    }
+}
+
+function addPause() {
+    saveString += "\\";
 }
 
 function reset() {
+    candleTime = 4;
+    changeCandleTime(1);
     saveString = "";
     tick = 0;
     document.getElementById("tick").innerHTML = "Tick: " + tick;
