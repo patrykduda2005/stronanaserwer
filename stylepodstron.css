@@ -61,3 +61,41 @@ a:hover {
 canvas {
     border: 1px solid var(--secondary-header-color);
 }
+
+button {
+    background-color: #25242C;
+    color: var(--header-color);
+    border-color: var(--secondary-header-color);
+    border-width: 2px;
+    margin: 0.25em;
+}
+
+button:hover  {
+    border-color:#FF7B0E;
+}
+
+.verbox , .horbox {
+    border: 1px solid var(--secondary-header-color);
+    margin: 1em;
+    padding: 1em;
+    display: inline-block;
+}
+
+.horbox {
+    border-left: 0;
+    border-right: 0;
+}
+
+.verbox {
+    border-top: 0;
+    border-bottom: 0;
+}
+
+
+form {
+    margin: 0.5em;
+}
+
+textarea, input {
+    margin: 0.25em;
+}

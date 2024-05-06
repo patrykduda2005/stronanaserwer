@@ -13,24 +13,28 @@
         <main style="text-align: center;">
             <canvas id="canvas" width="1200" height="550" style="width: 100%;">
             </canvas>
-            <button onclick="advanceATick()">Advance Time</button>
-            <button onclick="addCandle()">Add a candle !</button>
-            <button onclick="getSaveString()">Get save string</button>
-            <button onclick="reset()">Reset</button>
-            <button onclick="addPause()">Zrób pauze (\)</button>
-            <p id="tick">Tick: 0</p>
-            <hr>
-            <div>
-            <button onclick="changeCandleTime(1)">Zwiększ czas palenia sie świeczki</button>
-                <p id="candletime">Czas palenia: 5 ticków</p>
-            <button onclick="changeCandleTime(-1)">Zmniejsz czas palenia sie świeczki</button>
+            <div style="display: flex; justify-content: center; align-items: center;">
+                <div class="verbox">
+                    <button onclick="changeCandleTime(1)">Zwiększ czas palenia sie świeczki</button>
+                        <p id="candletime">Czas palenia: 5 ticków</p>
+                    <button onclick="changeCandleTime(-1)">Zmniejsz czas palenia sie świeczki</button>
+                </div>
+                <div class="verbox">
+                    <button onclick="advanceATick()">Advance Time</button>
+                    <button onclick="addCandle()">Add a candle !</button>
+                    <button onclick="addPause()">Zrób pauze (\)</button>
+                    <p id="tick">Tick: 0</p>
+                    <button onclick="reset()">Reset</button>
+                </div>
             </div>
-            <hr>
-            <div id="savestring" style="word-break: break-all;">Save string:</div>
-            <form action="javascript:" onsubmit="processSaveString(this[0].value)">
-                <input id="" type="text" placeholder="Read a save string..">
-                <button>-></button>
-            </form>
+            <div class="verbox">
+                <div id="savestring" style="word-break: break-all;">Save string:</div>
+                <button onclick="getSaveString()">Get save string</button>
+                <form action="javascript:" onsubmit="processSaveString(this[0].value)" style="display: flex;">
+                    <textarea id="" type="text" placeholder="Read a save string.." style="flex: 7;"></textarea>
+                    <button style="flex: 2;">-></button>
+                </form>
+            </div>
             <p>Ej czy wiedziałeś ze '\' robi przerwe w odczytywaniu save stringa ? '|' robi dluzszą, a '/' najdluzszą !</p>
         </main>
     </body>
