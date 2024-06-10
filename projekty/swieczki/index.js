@@ -39,8 +39,8 @@ const drawFrame = () => {
 
         const candle_width = CANDLE_WIDTH*CANDLE_SCALE;
         const candle_height = CANDLE_HEIGHT*CANDLE_SCALE;
-        const candle_hor_gap = 1/2; //in candle widths
-        const candle_ver_gap = 1/6; //in candle heights
+        const candle_hor_gap = 1/3; //in candle widths
+        const candle_ver_gap = 1/5.5; //in candle heights
         const ten_to_seven = (8*candle_width/6) //conversion from 10 candles to 7
         //ctx.drawImage(krzak[0], 0, 0, canvas.width, canvas.height);
         //ctx.drawImage(krzak[0], 200, 0, canvas.width, canvas.height);
