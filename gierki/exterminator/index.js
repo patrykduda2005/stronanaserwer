@@ -14,7 +14,7 @@ class AssetsWalker {
 
     next() {
         this.index++;
-        return this.loadedAssets[this.index-1];
+        //return this.loadedAssets[this.index-1];
     }
 
     reset() {
