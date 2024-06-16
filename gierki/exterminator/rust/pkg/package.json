@@ -1,0 +1,14 @@
+{
+  "name": "extermination",
+  "version": "0.1.0",
+  "files": [
+    "extermination_bg.wasm",
+    "extermination.js",
+    "extermination.d.ts"
+  ],
+  "module": "extermination.js",
+  "types": "extermination.d.ts",
+  "sideEffects": [
+    "./snippets/*"
+  ]
+}
