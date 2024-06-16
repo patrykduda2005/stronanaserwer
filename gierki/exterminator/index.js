@@ -92,7 +92,8 @@ theHexagon.draw(theHexagon.getCenteredCoords());
 canvas.onwheel = zoom;
 function zoom(e) {
     e.preventDefault();
-    theHexagon.hexagonWidth *= 1 + e.deltaY % 10 / 20;
+    console.log(e.deltaY);
+    theHexagon.hexagonWidth *= 1 + e.deltaY%100 / 100
     drawFrame();
 }
 
