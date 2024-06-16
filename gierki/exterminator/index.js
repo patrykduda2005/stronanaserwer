@@ -93,7 +93,7 @@ canvas.onwheel = zoom;
 function zoom(e) {
     e.preventDefault();
     console.log(e.deltaY);
-    theHexagon.hexagonWidth *= 1 + e.deltaY / 100
+    theHexagon.hexagonWidth *= 1 + e.deltaY / 1000
     drawFrame();
 }
 
