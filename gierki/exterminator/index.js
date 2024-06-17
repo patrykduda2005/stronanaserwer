@@ -92,8 +92,11 @@ theHexagon.draw(theHexagon.getCenteredCoords());
 canvas.onwheel = zoom;
 function zoom(e) {
     e.preventDefault();
-    console.log(e.deltaY);
-    theHexagon.hexagonWidth *= 1 + e.deltaY / 1000
+    
+    let scale = e.deltaY < 1 ?
+        1.1 :
+        0.9;
+    theHexagon.hexagonWidth *= scale;
     drawFrame();
 }
 
