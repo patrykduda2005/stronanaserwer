@@ -28,11 +28,13 @@ class HexagonDraw {
     hexagonXCount;
     tileIndex = 0;
     assets;
+    coords;
 
     constructor(hexagonXCount) {
         this.hexagonXCount = hexagonXCount;
         this.updateParameters();
         this.assets = new AssetsWalker();
+        this.coords = this.getCenteredCoords();
     }
 
     updateParameters() {
@@ -72,7 +74,7 @@ class HexagonDraw {
         }
     }
 
-    draw({x, y}) {
+    draw({x, y} = this.coords) {
         this.assets.reset();
         x += this.hexagonWidth*this.hexagonXCount/4;
         let growDirection = 1;
@@ -87,7 +89,7 @@ class HexagonDraw {
 
 
 let theHexagon = new HexagonDraw(50);
-theHexagon.draw(theHexagon.getCenteredCoords());
+theHexagon.draw();
 
 canvas.onwheel = zoom;
 function zoom(e) {
@@ -99,6 +101,33 @@ function zoom(e) {
     theHexagon.hexagonWidth *= scale;
     drawFrame();
 }
+
+let originalMouseX;
+let originalMouseY;
+let isDrag = false;
+
+canvas.addEventListener('contextmenu', e => {
+    e.preventDefault();
+    isDrag = true;
+    originalMouseX = e.clientX;
+    originalMouseY = e.clientY;
+});
+
+window.addEventListener('mouseup', e => {
+    if (!isDrag) return;
+    isDrag = false;
+});
+
+canvas.addEventListener('mousemove', e => {
+    if (!isDrag) return;
+    theHexagon.coords.x += (e.clientX - originalMouseX);
+    theHexagon.coords.y += e.clientY - originalMouseY;
+    //console.log(e.clientX - originalMouseX);
+    //console.log(e.clientY - originalMouseY);
+    originalMouseX = e.clientX;
+    originalMouseY = e.clientY;
+    drawFrame();
+});
 
 function drawCrosshair() {
     ctx.strokeStyle = "violet";
@@ -113,7 +142,7 @@ function drawCrosshair() {
 function drawFrame() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     theHexagon.updateParameters();
-    theHexagon.draw(theHexagon.getCenteredCoords());
+    theHexagon.draw();
 }
 
 const rustWasm = await wasmInit("./rust/pkg/extermination_bg.wasm");
