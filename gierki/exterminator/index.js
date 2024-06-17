@@ -3,6 +3,26 @@ import wasmInit from './rust/pkg/extermination.js'
 const canvas = document.querySelector("canvas#canvas");
 const ctx = canvas.getContext('2d');
 
+const load_sprites = (url, amount, sizeX, sizeY, offsetX, offsetY) => {
+    return new Promise((resolve, reject) => {
+        var image = new Image();
+        image.onload = () => {
+            const widthperone = sizeX;
+            let promises = [];
+            for (let i = 0; i < amount; i++) {
+                promises[i] = createImageBitmap(image, i * widthperone + offsetX, 0 + offsetY, widthperone, sizeY);
+            }
+            Promise.all(promises).then(sprites => {
+                    resolve(sprites);
+            })
+        }
+        image.onerror = () => reject();
+        image.src = url;
+    })
+}
+const krzak = await load_sprites("./krzak_trollface.png", 1, 77, 77, 0, 0);
+const trawa = await load_sprites("./trawa.png", 1, 34, 43, 31, 29);
+
 class AssetsWalker {
     index = 0;
     wasmArray;
@@ -43,6 +63,8 @@ class HexagonDraw {
 
     drawHexagon(x, y) {
         let texture = this.assets.next();
+        ctx.drawImage(trawa[0], x, y, this.hexagonWidth, this.hexagonHeight * 1.3);
+        /*
         ctx.fillStyle = "#FFFFFF";
         ctx.strokeStyle = "#FF0000";
         ctx.lineWidth = 1;
@@ -56,6 +78,7 @@ class HexagonDraw {
         ctx.lineTo(x + (this.hexagonWidth/2), y);
         ctx.fill();
         ctx.stroke();
+        */
     }
 
     drawHexagonRow(y, x, count) {
