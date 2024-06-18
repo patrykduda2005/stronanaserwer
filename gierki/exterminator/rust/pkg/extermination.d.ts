@@ -1,10 +1,15 @@
 /* tslint:disable */
 /* eslint-disable */
+/**
+* @returns {number}
+*/
+export function get_output_buffer_pointer(): number;
 
 export type InitInput = RequestInfo | URL | Response | BufferSource | WebAssembly.Module;
 
 export interface InitOutput {
   readonly memory: WebAssembly.Memory;
+  readonly get_output_buffer_pointer: () => number;
 }
 
 export type SyncInitInput = BufferSource | WebAssembly.Module;

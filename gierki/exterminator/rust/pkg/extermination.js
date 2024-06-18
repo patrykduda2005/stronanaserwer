@@ -1,5 +1,13 @@
 let wasm;
 
+/**
+* @returns {number}
+*/
+export function get_output_buffer_pointer() {
+    const ret = wasm.get_output_buffer_pointer();
+    return ret >>> 0;
+}
+
 async function __wbg_load(module, imports) {
     if (typeof Response === 'function' && module instanceof Response) {
         if (typeof WebAssembly.instantiateStreaming === 'function') {

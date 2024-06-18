@@ -3,38 +3,62 @@ import wasmInit from './rust/pkg/extermination.js'
 const canvas = document.querySelector("canvas#canvas");
 const ctx = canvas.getContext('2d');
 
-const load_sprites = (url, amount, sizeX, sizeY, offsetX, offsetY) => {
-    return new Promise((resolve, reject) => {
-        var image = new Image();
-        image.onload = () => {
-            const widthperone = sizeX;
-            let promises = [];
-            for (let i = 0; i < amount; i++) {
-                promises[i] = createImageBitmap(image, i * widthperone + offsetX, 0 + offsetY, widthperone, sizeY);
-            }
-            Promise.all(promises).then(sprites => {
-                    resolve(sprites);
-            })
-        }
-        image.onerror = () => reject();
-        image.src = url;
-    })
-}
-const krzak = await load_sprites("./krzak_trollface.png", 1, 77, 77, 0, 0);
-const trawa = await load_sprites("./trawa.png", 1, 34, 43, 31, 29);
-
+//import rustWasm
 class AssetsWalker {
     index = 0;
     wasmArray;
     loadedAssets;
+    colors;
 
     constructor() {
-        
+        return (async () => {
+            this.updateWasmArray();
+            console.log(this.wasmArray);
+            this.loadedAssets = [
+                await this.loadSprites("./trawa.png", 1, 34, 43, 31, 29),
+            ];
+            this.colors = [
+                'red',
+                'green',
+                'blue',
+            ];
+            return this;
+        })();
+    }
+
+    loadSprites(url, amount, sizeX, sizeY, offsetX = 0, offsetY = 0) {
+        return new Promise((resolve, reject) => {
+            var image = new Image();
+            image.onload = () => {
+                const widthperone = sizeX;
+                let promises = [];
+                for (let i = 0; i < amount; i++) {
+                    promises[i] = createImageBitmap(image, i * widthperone + offsetX, 0 + offsetY, widthperone, sizeY);
+                }
+                Promise.all(promises).then(sprites => {
+                        resolve(sprites);
+                })
+            }
+            image.onerror = () => reject();
+            image.src = url;
+        })
     }
 
     next() {
-        this.index++;
-        //return this.loadedAssets[this.index-1];
+        this.index+=3;
+    }
+
+    getTexture() {
+        return this.loadedAssets[this.wasmArray[this.index]][this.wasmArray[this.index+1]];
+    }
+
+    getColor() {
+        return this.colors[this.wasmArray[this.index+2]];
+    }
+
+    updateWasmArray() {
+        //tickAnimation();
+        this.wasmArray = new Uint8Array(rustWasm.memory.buffer, outputPointer, 3 * 1900);
     }
 
     reset() {
@@ -53,10 +77,13 @@ class HexagonDraw {
     coords;
 
     constructor(hexagonXCount) {
-        this.hexagonXCount = hexagonXCount;
-        this.updateParameters();
-        this.assets = new AssetsWalker();
-        this.coords = this.getCenteredCoords();
+        return (async () => {
+            this.hexagonXCount = hexagonXCount;
+            this.updateParameters();
+            this.assets = await new AssetsWalker();
+            this.coords = this.getCenteredCoords();
+            return this;
+        })();
     }
 
     updateParameters() {
@@ -86,9 +113,10 @@ class HexagonDraw {
     }
 
     drawHexagon(x, y) {
-        let texture = this.assets.next();
-        ctx.drawImage(trawa[0], x, y, this.hexagonWidth, this.hexagonHeight * 1.3);
-        this.tintHexagon(x, y, 'blue');
+        let texture = this.assets.getTexture();
+        this.assets.next();
+        ctx.drawImage(texture, x, y, this.hexagonWidth, this.hexagonHeight * 1.3);
+        this.tintHexagon(x, y, this.assets.getColor());
         //ctx.fillStyle = "#FFFFFF";
         //ctx.strokeStyle = "#FF0000";
         //ctx.lineWidth = 1;
@@ -129,7 +157,9 @@ function convertToReal({fakeX, fakeY}) {
     }
 }
 
-let theHexagon = new HexagonDraw(50);
+const rustWasm = await wasmInit("./rust/pkg/extermination_bg.wasm");
+const outputPointer = rustWasm.get_output_buffer_pointer();
+let theHexagon = await new HexagonDraw(50);
 theHexagon.draw();
 
 let originalMouseX;
@@ -187,12 +217,12 @@ function drawCrosshair() {
 } drawCrosshair();
 
 function drawFrame() {
+    theHexagon.assets.updateWasmArray();
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     theHexagon.updateParameters();
     theHexagon.draw();
 }
 
-const rustWasm = await wasmInit("./rust/pkg/extermination_bg.wasm");
 const renderLoop = async () => {
     drawFrame();
     drawCrosshair();
