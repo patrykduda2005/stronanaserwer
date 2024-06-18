@@ -15,3 +15,4 @@ pub fn get_output_buffer_pointer() -> *const u8 {
         OUTPUT_BUFFER.as_ptr()
     }
 }
+
