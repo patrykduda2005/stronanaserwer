@@ -61,13 +61,11 @@ class HexagonDraw {
         this.hexagonHeight = this.hexagonWidth/1.73205080757*2;
     }
 
-    drawHexagon(x, y) {
-        let texture = this.assets.next();
-        ctx.drawImage(trawa[0], x, y, this.hexagonWidth, this.hexagonHeight * 1.3);
-        /*
-        ctx.fillStyle = "#FFFFFF";
-        ctx.strokeStyle = "#FF0000";
-        ctx.lineWidth = 1;
+    tintHexagon(x, y, tintColor) {
+        ctx.globalCompositeOperation = 'source-atop';
+        ctx.fillStyle = tintColor;
+
+        ctx.globalAlpha = 0.5;
         ctx.beginPath();
         ctx.moveTo(x + (this.hexagonWidth/2), y);
         ctx.lineTo(x + this.hexagonWidth, y + (this.hexagonHeight/4));
@@ -76,9 +74,20 @@ class HexagonDraw {
         ctx.lineTo(x, y + (this.hexagonHeight*3/4));
         ctx.lineTo(x, y + (this.hexagonHeight/4));
         ctx.lineTo(x + (this.hexagonWidth/2), y);
+        ctx.closePath();
+
         ctx.fill();
-        ctx.stroke();
-        */
+        ctx.globalCompositeOperation = 'source-over';
+        ctx.globalAlpha = 1.0;
+    }
+
+    drawHexagon(x, y) {
+        let texture = this.assets.next();
+        ctx.drawImage(trawa[0], x, y, this.hexagonWidth, this.hexagonHeight * 1.3);
+        this.tintHexagon(x, y, 'blue');
+        //ctx.fillStyle = "#FFFFFF";
+        //ctx.strokeStyle = "#FF0000";
+        //ctx.lineWidth = 1;
     }
 
     drawHexagonRow(y, x, count) {
