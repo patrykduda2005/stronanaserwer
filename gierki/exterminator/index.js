@@ -47,6 +47,8 @@ class HexagonDraw {
     hexagonWidth = 20;
     hexagonXCount;
     tileIndex = 0;
+    bigHexagonWidth;
+    bigHexagonHeight;
     assets;
     coords;
 
@@ -59,6 +61,8 @@ class HexagonDraw {
 
     updateParameters() {
         this.hexagonHeight = this.hexagonWidth/1.73205080757*2;
+        this.bigHexagonWidth = this.hexagonXCount * this.hexagonWidth;
+        this.bigHexagonHeight = (this.hexagonXCount * this.hexagonHeight*3/4) + this.hexagonHeight;
     }
 
     tintHexagon(x, y, tintColor) {
@@ -99,10 +103,9 @@ class HexagonDraw {
     }
 
     getCenteredCoords() {
-        const bigHexagonHeight = (this.hexagonXCount * this.hexagonHeight*3/4) + this.hexagonHeight;
         return {
-            x: (canvas.width - this.hexagonWidth*this.hexagonXCount) / 2,
-            y: (canvas.height - bigHexagonHeight)/2,
+            x: (canvas.width - this.bigHexagonWidth) / 2,
+            y: (canvas.height - this.bigHexagonHeight)/2,
         }
     }
 
@@ -119,9 +122,19 @@ class HexagonDraw {
     }
 }
 
+function convertToReal({fakeX, fakeY}) {
+    return {
+        x: (fakeX - bounding.left)/(bounding.right - bounding.left)*canvas.width,
+        y: (fakeY - bounding.top)/(bounding.bottom - bounding.top)*canvas.height
+    }
+}
 
 let theHexagon = new HexagonDraw(50);
 theHexagon.draw();
+
+let originalMouseX;
+let originalMouseY;
+let isDrag = false;
 
 canvas.onwheel = zoom;
 function zoom(e) {
@@ -131,12 +144,14 @@ function zoom(e) {
         1.1 :
         0.9;
     theHexagon.hexagonWidth *= scale;
+
+    //const bounding = canvas.getBoundingClientRect();
+    //const convertedX = (e.clientX - bounding.left)/(bounding.right - bounding.left)*canvas.width;
+    //const convertedY = (e.clientY - bounding.top)/(bounding.bottom - bounding.top)*canvas.height;
+    //theHexagon.coords.x = canvas.width - convertedX - theHexagon.bigHexagonWidth/2;
+    //theHexagon.coords.y = canvas.height - convertedY - theHexagon.bigHexagonHeight/2;
     drawFrame();
 }
-
-let originalMouseX;
-let originalMouseY;
-let isDrag = false;
 
 canvas.addEventListener('contextmenu', e => {
     e.preventDefault();
@@ -180,6 +195,7 @@ function drawFrame() {
 const rustWasm = await wasmInit("./rust/pkg/extermination_bg.wasm");
 const renderLoop = async () => {
     drawFrame();
+    drawCrosshair();
     await new Promise(r => setTimeout(r, 250));
     requestAnimationFrame(renderLoop);
 }
