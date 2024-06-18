@@ -1,23 +1,23 @@
 import {AssetsWalker} from './assets.js'
+import { map_width } from './assets.js';
 
 const canvas = document.querySelector("canvas#canvas");
 export const ctx = canvas.getContext('2d');
 
 export class HexagonDraw {
-    hexagonHeight;
-    hexagonWidth = 20;
-    hexagonXCount;
-    tileIndex = 0;
-    bigHexagonWidth;
-    bigHexagonHeight;
-    assets;
-    coords;
+    hexagonHeight;          //Height of a single small hexagon
+    hexagonWidth = 20;      //Width of a single small hexagon
+    hexagonXCount;          //amount of hexagons across X axis
+    bigHexagonWidth;        //width of entire map
+    bigHexagonHeight;       //height of entire map
+    assets;                 //assetWalker
+    coords;                 //coords of top-left point of hexagon
 
     constructor(hexagonXCount) {
         return (async () => {
-            this.hexagonXCount = hexagonXCount;
-            this.updateParameters();
             this.assets = await new AssetsWalker();
+            this.hexagonXCount = map_width;
+            this.updateParameters();
             this.coords = this.getCenteredCoords();
             return this;
         })();
@@ -52,9 +52,9 @@ export class HexagonDraw {
 
     drawHexagon(x, y) {
         let texture = this.assets.getTexture();
-        this.assets.next();
         ctx.drawImage(texture, x, y, this.hexagonWidth, this.hexagonHeight * 1.3);
         this.tintHexagon(x, y, this.assets.getColor());
+        this.assets.next();
         //ctx.fillStyle = "#FFFFFF";
         //ctx.strokeStyle = "#FF0000";
         //ctx.lineWidth = 1;

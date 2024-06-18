@@ -8,7 +8,7 @@ function convertToReal({fakeX, fakeY}) {
     }
 }
 
-export const theHexagon = await new HexagonDraw(50);
+export const theHexagon = await new HexagonDraw();
 
 function drawCrosshair() {
     ctx.strokeStyle = "violet";
