@@ -86,6 +86,18 @@ export class Tiles {
         wasm.tiles_update_buffer(this.__wbg_ptr);
     }
     /**
+    * @param {number} mouse_x
+    * @param {number} mouse_y
+    * @param {number} map_pos_x
+    * @param {number} map_pos_y
+    * @param {number} tile_width
+    * @param {number} tile_height
+    * @param {number} map_height
+    */
+    click_event(mouse_x, mouse_y, map_pos_x, map_pos_y, tile_width, tile_height, map_height) {
+        wasm.tiles_click_event(this.__wbg_ptr, mouse_x, mouse_y, map_pos_x, map_pos_y, tile_width, tile_height, map_height);
+    }
+    /**
     */
     tick_frame() {
         wasm.tiles_tick_frame(this.__wbg_ptr);
@@ -128,6 +140,9 @@ function __wbg_get_imports() {
     imports.wbg = {};
     imports.wbg.__wbg_assert_49b5027b7fa9f701 = function(arg0, arg1, arg2) {
         console.assert(arg0 !== 0, getStringFromWasm0(arg1, arg2));
+    };
+    imports.wbg.__wbg_log_5ecc9022fa3eba79 = function(arg0, arg1) {
+        console.log(getStringFromWasm0(arg0, arg1));
     };
     imports.wbg.__wbindgen_throw = function(arg0, arg1) {
         throw new Error(getStringFromWasm0(arg0, arg1));

@@ -27,6 +27,16 @@ export class Tiles {
 */
   update_buffer(): void;
 /**
+* @param {number} mouse_x
+* @param {number} mouse_y
+* @param {number} map_pos_x
+* @param {number} map_pos_y
+* @param {number} tile_width
+* @param {number} tile_height
+* @param {number} map_height
+*/
+  click_event(mouse_x: number, mouse_y: number, map_pos_x: number, map_pos_y: number, tile_width: number, tile_height: number, map_height: number): void;
+/**
 */
   tick_frame(): void;
 }
@@ -41,6 +51,7 @@ export interface InitOutput {
   readonly __wbg_tiles_free: (a: number) => void;
   readonly tiles_new: () => number;
   readonly tiles_update_buffer: (a: number) => void;
+  readonly tiles_click_event: (a: number, b: number, c: number, d: number, e: number, f: number, g: number, h: number) => void;
   readonly tiles_tick_frame: (a: number) => void;
   readonly tick_frame: () => void;
 }

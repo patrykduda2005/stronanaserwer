@@ -1,8 +1,16 @@
 import { theHexagon, drawFrame } from "./index.js";
+import { wasmManager } from "./wasmManager.js";
 
 let originalMouseX;
 let originalMouseY;
 let isDrag = false;
+
+function convertViewport({x, y}) {
+    const bounding = canvas.getBoundingClientRect();
+    const convertedX = (x - bounding.left)/(bounding.right - bounding.left)*canvas.width;
+    const convertedY = (y - bounding.top)/(bounding.bottom - bounding.top)*canvas.height;
+    return {x: convertedX, y: convertedY};
+}
 
 canvas.onwheel = zoom;
 function zoom(e) {
@@ -37,9 +45,15 @@ canvas.addEventListener('mousemove', e => {
     if (!isDrag) return;
     theHexagon.coords.x += (e.clientX - originalMouseX);
     theHexagon.coords.y += e.clientY - originalMouseY;
-    //console.log(e.clientX - originalMouseX);
-    //console.log(e.clientY - originalMouseY);
     originalMouseX = e.clientX;
     originalMouseY = e.clientY;
     drawFrame();
+});
+
+canvas.addEventListener('click', e =>  {
+    const mouseCoords = convertViewport({x: e.clientX, y: e.clientY});
+    const mapPosition = {x: theHexagon.coords.x, y: theHexagon.coords.y};
+    const tileSize = {width: theHexagon.hexagonWidth, height: theHexagon.hexagonHeight};
+    console.log(mouseCoords);
+    wasmManager.clickEvent(mouseCoords, mapPosition, tileSize, theHexagon.bigHexagonHeight);
 });

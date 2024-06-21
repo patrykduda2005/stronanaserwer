@@ -1,20 +1,13 @@
-import wasmInit, {Tiles} from '../rust/pkg/extermination.js'
-
-const rustWasm = await wasmInit("./rust/pkg/extermination_bg.wasm");
-const outputPointer = rustWasm.get_output_buffer_pointer();
-export const map_width = rustWasm.get_map_width();
-
+import { wasmManager } from "./wasmManager.js";
 
 export class AssetsWalker {
     index = 0;      //index of tile
     wasmArray;      //array of textures from Wasm
     loadedAssets;   //available assets
     colors;         //available colors
-    tiles;          //tiles class from wasm
 
     constructor() {
         return (async () => {
-            this.tiles = Tiles.new();
             this.updateWasmArray();
             this.loadedAssets = [
                 await this.loadSprites("img/trawa.png", 1, 34, 43, 31, 29),
@@ -60,9 +53,7 @@ export class AssetsWalker {
     }
 
     updateWasmArray() {
-        this.tiles.tick_frame();
-        this.tiles.update_buffer();
-        this.wasmArray = new Uint8Array(rustWasm.memory.buffer, outputPointer, 3 * rustWasm.get_hex_amount());
+        this.wasmArray = wasmManager.getWasmArray();
     }
 
     reset() {

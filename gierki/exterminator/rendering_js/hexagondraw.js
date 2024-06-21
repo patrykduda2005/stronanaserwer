@@ -1,5 +1,5 @@
 import {AssetsWalker} from './assets.js'
-import { map_width } from './assets.js';
+import { wasmManager } from './wasmManager.js';
 
 const canvas = document.querySelector("canvas#canvas");
 export const ctx = canvas.getContext('2d');
@@ -8,6 +8,7 @@ export class HexagonDraw {
     hexagonHeight;          //Height of a single small hexagon
     hexagonWidth = 20;      //Width of a single small hexagon
     hexagonXCount;          //amount of hexagons across X axis
+    hexagonYCount;          //amount of hexagons across Y axis
     bigHexagonWidth;        //width of entire map
     bigHexagonHeight;       //height of entire map
     assets;                 //assetWalker
@@ -16,7 +17,8 @@ export class HexagonDraw {
     constructor(hexagonXCount) {
         return (async () => {
             this.assets = await new AssetsWalker();
-            this.hexagonXCount = map_width;
+            this.hexagonXCount = wasmManager.getMapWidth();
+            this.hexagonYCount = this.hexagonXCount + 1;
             this.updateParameters();
             this.coords = this.getCenteredCoords();
             return this;

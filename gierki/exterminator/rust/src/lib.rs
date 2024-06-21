@@ -1,7 +1,7 @@
 use wasm_bindgen::prelude::wasm_bindgen;
 
-const MAP_WIDTH: usize = 50; //must be even
-const HEX_AMOUNT: usize = ((MAP_WIDTH/2) + (MAP_WIDTH-1))*(MAP_WIDTH/2) + MAP_WIDTH;
+const MAP_HOR_COUNT: usize = 50; //must be even
+const HEX_AMOUNT: usize = ((MAP_HOR_COUNT/2) + (MAP_HOR_COUNT-1))*(MAP_HOR_COUNT/2) + MAP_HOR_COUNT;
 const OUTPUT_BUFFER_SIZE: usize = 3 * HEX_AMOUNT;
 static mut OUTPUT_BUFFER: [u8; OUTPUT_BUFFER_SIZE] = [0; OUTPUT_BUFFER_SIZE];
 
@@ -15,8 +15,8 @@ extern "C" {
 
 #[wasm_bindgen]
 pub fn get_output_buffer_pointer() -> *const u8 {
-    assert(MAP_WIDTH % 2 == 0, "MAP_WIDTH must be even!!!");
-    assert!(MAP_WIDTH % 2 == 0, "MAP_WIDTH must be even!!!");
+    assert(MAP_HOR_COUNT % 2 == 0, "MAP_WIDTH must be even!!!");
+    assert!(MAP_HOR_COUNT % 2 == 0, "MAP_WIDTH must be even!!!");
     unsafe {
         OUTPUT_BUFFER.as_ptr()
     }
@@ -29,7 +29,7 @@ pub fn get_hex_amount() -> usize {
 
 #[wasm_bindgen]
 pub fn get_map_width() -> usize {
-    return MAP_WIDTH;
+    return MAP_HOR_COUNT;
 }
 
 
@@ -43,3 +43,4 @@ pub fn tick_frame() {
 
 
 mod tiles;
+mod input;
