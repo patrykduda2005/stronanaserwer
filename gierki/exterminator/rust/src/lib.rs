@@ -2,7 +2,7 @@ extern crate console_error_panic_hook;
 
 use wasm_bindgen::prelude::wasm_bindgen;
 
-const MAP_HOR_COUNT: usize = 8;
+const MAP_HOR_COUNT: usize = 50;
 const HEX_AMOUNT: usize = ((MAP_HOR_COUNT/2) + (MAP_HOR_COUNT-1))*(MAP_HOR_COUNT/2) + MAP_HOR_COUNT;
 const OUTPUT_BUFFER_SIZE: usize = 3 * HEX_AMOUNT;
 static mut OUTPUT_BUFFER: [u8; OUTPUT_BUFFER_SIZE] = [0; OUTPUT_BUFFER_SIZE];

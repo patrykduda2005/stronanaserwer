@@ -69,7 +69,14 @@ impl Tiles {
     }
 
     pub fn click_tile(&mut self, x: usize, y: usize) {
+        self.change_color_at(x, y);
+    }
 
+    fn change_color_at(&mut self, x: usize, y: usize) {
+        match self.0[y][x].as_mut() {
+            None => (),
+            Some(tile) => tile.change_color(Some(tile::Color::Blue))
+        }
     }
 
     pub fn tick_frame(&mut self) {

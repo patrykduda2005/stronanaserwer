@@ -52,10 +52,8 @@ canvas.addEventListener('mousemove', e => {
     drawFrame();
 });
 
-//canvas.addEventListener('click', e =>  {
-//    const mouseCoords = convertViewport({x: e.clientX, y: e.clientY});
-//    const mapPosition = {x: theHexagon.coords.x, y: theHexagon.coords.y};
-//    const tileSize = {width: theHexagon.hexagonWidth, height: theHexagon.hexagonHeight};
-//    console.log(mouseCoords);
-//    //wasmManager.clickEvent(mouseCoords, mapPosition, tileSize, theHexagon.bigHexagonHeight);
-//});
+canvas.addEventListener('click', e =>  {
+    const mouseCoords = convertViewport({x: e.clientX, y: e.clientY});
+    console.log(mouseCoords);
+    wasmManager.clickEvent(mouseCoords);
+});

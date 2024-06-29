@@ -30,8 +30,8 @@ class WasmManager {
         this.jsCommunicator.scale_map(scale);
     }
 
-    clickEvent(mouseCoords, mapPosition, tileSize, mapHeight) {
-        this.jsCommunicator.click_event(mouseCoords.x, mouseCoords.y, mapPosition.x, mapPosition.y, tileSize.width, tileSize.height, mapHeight);
+    clickEvent(mouseCoords) {
+        this.jsCommunicator.click_event(mouseCoords.x, mouseCoords.y);
     }
 }
 

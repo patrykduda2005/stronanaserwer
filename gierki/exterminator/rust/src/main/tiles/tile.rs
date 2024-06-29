@@ -1,8 +1,10 @@
 use std::fmt::{Debug, Pointer};
 
+use crate::log;
+
 //Owner
-#[derive(Clone, Copy)]
-enum Color {
+#[derive(Clone, Copy, Debug)]
+pub enum Color {
     Red = 1,
     Green = 2,
     Blue = 3,
@@ -26,7 +28,7 @@ pub struct Tile {
 impl Default for Tile {
     fn default() -> Self {
         Tile {
-            color: Some(Color::Red),
+            color: None,
             stored_man_power: None,
             man_power: 0,
             frame: 0,
@@ -47,5 +49,9 @@ impl Tile {
             self.frame as u8,
             color_num,
         )
+    }
+
+    pub fn change_color(&mut self, color: Option<Color>) {
+        self.color = color;
     }
 }
