@@ -17,6 +17,21 @@ function getStringFromWasm0(ptr, len) {
     ptr = ptr >>> 0;
     return cachedTextDecoder.decode(getUint8Memory0().subarray(ptr, ptr + len));
 }
+
+const heap = new Array(128).fill(undefined);
+
+heap.push(undefined, null, true, false);
+
+let heap_next = heap.length;
+
+function addHeapObject(obj) {
+    if (heap_next === heap.length) heap.push(heap.length + 1);
+    const idx = heap_next;
+    heap_next = heap[idx];
+
+    heap[idx] = obj;
+    return idx;
+}
 /**
 * @returns {number}
 */
@@ -34,73 +49,99 @@ export function get_hex_amount() {
 }
 
 /**
-* @returns {number}
-*/
-export function get_map_width() {
-    const ret = wasm.get_map_width();
-    return ret >>> 0;
-}
-
-/**
 */
 export function tick_frame() {
     wasm.tick_frame();
 }
 
-const TilesFinalization = (typeof FinalizationRegistry === 'undefined')
+function getObject(idx) { return heap[idx]; }
+
+function dropObject(idx) {
+    if (idx < 132) return;
+    heap[idx] = heap_next;
+    heap_next = idx;
+}
+
+function takeObject(idx) {
+    const ret = getObject(idx);
+    dropObject(idx);
+    return ret;
+}
+
+const JsCommunicatorFinalization = (typeof FinalizationRegistry === 'undefined')
     ? { register: () => {}, unregister: () => {} }
-    : new FinalizationRegistry(ptr => wasm.__wbg_tiles_free(ptr >>> 0));
+    : new FinalizationRegistry(ptr => wasm.__wbg_jscommunicator_free(ptr >>> 0));
 /**
 */
-export class Tiles {
+export class JsCommunicator {
 
     static __wrap(ptr) {
         ptr = ptr >>> 0;
-        const obj = Object.create(Tiles.prototype);
+        const obj = Object.create(JsCommunicator.prototype);
         obj.__wbg_ptr = ptr;
-        TilesFinalization.register(obj, obj.__wbg_ptr, obj);
+        JsCommunicatorFinalization.register(obj, obj.__wbg_ptr, obj);
         return obj;
     }
 
     __destroy_into_raw() {
         const ptr = this.__wbg_ptr;
         this.__wbg_ptr = 0;
-        TilesFinalization.unregister(this);
+        JsCommunicatorFinalization.unregister(this);
         return ptr;
     }
 
     free() {
         const ptr = this.__destroy_into_raw();
-        wasm.__wbg_tiles_free(ptr);
+        wasm.__wbg_jscommunicator_free(ptr);
     }
     /**
-    * @returns {Tiles}
+    * @returns {JsCommunicator}
     */
     static new() {
-        const ret = wasm.tiles_new();
-        return Tiles.__wrap(ret);
+        const ret = wasm.jscommunicator_new();
+        return JsCommunicator.__wrap(ret);
     }
     /**
     */
     update_buffer() {
-        wasm.tiles_update_buffer(this.__wbg_ptr);
+        wasm.jscommunicator_update_buffer(this.__wbg_ptr);
     }
     /**
     * @param {number} mouse_x
     * @param {number} mouse_y
-    * @param {number} map_pos_x
-    * @param {number} map_pos_y
-    * @param {number} tile_width
-    * @param {number} tile_height
-    * @param {number} map_height
     */
-    click_event(mouse_x, mouse_y, map_pos_x, map_pos_y, tile_width, tile_height, map_height) {
-        wasm.tiles_click_event(this.__wbg_ptr, mouse_x, mouse_y, map_pos_x, map_pos_y, tile_width, tile_height, map_height);
+    click_event(mouse_x, mouse_y) {
+        wasm.jscommunicator_click_event(this.__wbg_ptr, mouse_x, mouse_y);
     }
     /**
     */
     tick_frame() {
-        wasm.tiles_tick_frame(this.__wbg_ptr);
+        wasm.jscommunicator_tick_frame(this.__wbg_ptr);
+    }
+    /**
+    */
+    update_map() {
+        wasm.jscommunicator_update_map(this.__wbg_ptr);
+    }
+    /**
+    * @param {number} scale
+    */
+    scale_map(scale) {
+        wasm.jscommunicator_scale_map(this.__wbg_ptr, scale);
+    }
+    /**
+    * @returns {any}
+    */
+    get_map_properties() {
+        const ret = wasm.jscommunicator_get_map_properties(this.__wbg_ptr);
+        return takeObject(ret);
+    }
+    /**
+    * @param {number} x
+    * @param {number} y
+    */
+    move_map(x, y) {
+        wasm.jscommunicator_move_map(this.__wbg_ptr, x, y);
     }
 }
 
@@ -141,8 +182,9 @@ function __wbg_get_imports() {
     imports.wbg.__wbg_assert_49b5027b7fa9f701 = function(arg0, arg1, arg2) {
         console.assert(arg0 !== 0, getStringFromWasm0(arg1, arg2));
     };
-    imports.wbg.__wbg_log_5ecc9022fa3eba79 = function(arg0, arg1) {
-        console.log(getStringFromWasm0(arg0, arg1));
+    imports.wbg.__wbindgen_string_new = function(arg0, arg1) {
+        const ret = getStringFromWasm0(arg0, arg1);
+        return addHeapObject(ret);
     };
     imports.wbg.__wbindgen_throw = function(arg0, arg1) {
         throw new Error(getStringFromWasm0(arg0, arg1));

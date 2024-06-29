@@ -1,2 +1,4 @@
-./rust/pkg/extermination.js: $(wildcard ./rust/src/*.rs) $(wildcard ./rust/src/tiles/*.rs)
+FILES = $(shell find ./rust/ -type f -name "*.rs")
+
+./rust/pkg/extermination.js: $(FILES)
 	wasm-pack build --target web ./rust/

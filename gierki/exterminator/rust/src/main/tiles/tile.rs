@@ -1,3 +1,5 @@
+use std::fmt::{Debug, Pointer};
+
 //Owner
 #[derive(Clone, Copy)]
 enum Color {
@@ -24,7 +26,7 @@ pub struct Tile {
 impl Default for Tile {
     fn default() -> Self {
         Tile {
-            color: None,
+            color: Some(Color::Red),
             stored_man_power: None,
             man_power: 0,
             frame: 0,

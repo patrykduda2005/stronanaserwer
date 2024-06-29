@@ -1,4 +1,4 @@
-import { theHexagon, drawFrame } from "./index.js";
+import { drawFrame } from "./index.js";
 import { wasmManager } from "./wasmManager.js";
 
 let originalMouseX;
@@ -19,7 +19,7 @@ function zoom(e) {
     let scale = e.deltaY < 1 ?
         1.1 :
         0.9;
-    theHexagon.hexagonWidth *= scale;
+    wasmManager.scaleMap(scale);
 
     //const bounding = canvas.getBoundingClientRect();
     //const convertedX = (e.clientX - bounding.left)/(bounding.right - bounding.left)*canvas.width;
@@ -43,17 +43,19 @@ window.addEventListener('mouseup', e => {
 
 canvas.addEventListener('mousemove', e => {
     if (!isDrag) return;
-    theHexagon.coords.x += (e.clientX - originalMouseX);
-    theHexagon.coords.y += e.clientY - originalMouseY;
+    wasmManager.move_map(
+        e.clientX - originalMouseX,
+        e.clientY - originalMouseY,
+    );
     originalMouseX = e.clientX;
     originalMouseY = e.clientY;
     drawFrame();
 });
 
-canvas.addEventListener('click', e =>  {
-    const mouseCoords = convertViewport({x: e.clientX, y: e.clientY});
-    const mapPosition = {x: theHexagon.coords.x, y: theHexagon.coords.y};
-    const tileSize = {width: theHexagon.hexagonWidth, height: theHexagon.hexagonHeight};
-    console.log(mouseCoords);
-    wasmManager.clickEvent(mouseCoords, mapPosition, tileSize, theHexagon.bigHexagonHeight);
-});
+//canvas.addEventListener('click', e =>  {
+//    const mouseCoords = convertViewport({x: e.clientX, y: e.clientY});
+//    const mapPosition = {x: theHexagon.coords.x, y: theHexagon.coords.y};
+//    const tileSize = {width: theHexagon.hexagonWidth, height: theHexagon.hexagonHeight};
+//    console.log(mouseCoords);
+//    //wasmManager.clickEvent(mouseCoords, mapPosition, tileSize, theHexagon.bigHexagonHeight);
+//});

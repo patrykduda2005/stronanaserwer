@@ -1,6 +1,6 @@
 use wasm_bindgen::prelude::wasm_bindgen;
 
-const MAP_HOR_COUNT: usize = 8; //must be even
+const MAP_HOR_COUNT: usize = 8;
 const HEX_AMOUNT: usize = ((MAP_HOR_COUNT/2) + (MAP_HOR_COUNT-1))*(MAP_HOR_COUNT/2) + MAP_HOR_COUNT;
 const OUTPUT_BUFFER_SIZE: usize = 3 * HEX_AMOUNT;
 static mut OUTPUT_BUFFER: [u8; OUTPUT_BUFFER_SIZE] = [0; OUTPUT_BUFFER_SIZE];
@@ -27,10 +27,10 @@ pub fn get_hex_amount() -> usize {
     return HEX_AMOUNT;
 }
 
-#[wasm_bindgen]
-pub fn get_map_width() -> usize {
-    return MAP_HOR_COUNT;
-}
+//#[wasm_bindgen]
+//pub fn get_map_width() -> usize {
+//    return MAP_HOR_COUNT;
+//}
 
 
 #[wasm_bindgen]
@@ -42,5 +42,4 @@ pub fn tick_frame() {
 
 
 
-mod tiles;
-mod input;
+mod main;

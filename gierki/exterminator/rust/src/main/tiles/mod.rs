@@ -1,32 +1,60 @@
 use core::panic;
-use std::{fmt::format, str::CharIndices};
 
-use wasm_bindgen::prelude::wasm_bindgen;
-
-use crate::{log, MAP_HOR_COUNT, OUTPUT_BUFFER, OUTPUT_BUFFER_SIZE};
+use crate::{log, MAP_HOR_COUNT};
 
 
 mod tile;
 
-#[wasm_bindgen]
-pub struct Tiles(Vec<tile::Tile>);
+pub struct Tiles(Vec<Vec<Option<tile::Tile>>>);
 
-#[wasm_bindgen]
 impl Tiles {
-    pub fn new() -> Self {
-        Tiles::default()
+    pub fn new(map_hor_count: usize) -> Self {
+        let mut final_vector: Vec<Vec<Option<tile::Tile>>> = Vec::new();
+        let mut offset = map_hor_count/2;
+        let mut lenght = map_hor_count/2;
+        for y in 0..map_hor_count+1 {
+            let mut row: Vec<Option<tile::Tile>> = Vec::new();
+            for _ in 0..offset {
+                row.push(None);
+            }
+            for _ in 0..lenght {
+                row.push(Some(tile::Tile::default()));
+            }
+            for _ in lenght+offset..map_hor_count {
+                row.push(None);
+            }
+            if y < (map_hor_count+1)/2 {
+                offset -= 1;
+                lenght += 1;
+            } else {
+                lenght -= 1;
+            }
+            final_vector.push(row);
+        }
+        Tiles (
+            final_vector,
+        )
     }
 
     pub fn update_buffer(&self) {
-        let mut temp_buffer = [0; OUTPUT_BUFFER_SIZE];
-        self.0.iter().enumerate().for_each(|(i, x)| {
-            let tuple = x.get_js_info();
-            temp_buffer[i*3] = tuple.0;
-            temp_buffer[i*3+1] = tuple.1;
-            temp_buffer[i*3+2] = tuple.2;
+        let mut temp_buffer = [0; crate::OUTPUT_BUFFER_SIZE];
+        let mut i = 0;
+        self.0.iter().for_each(|y| {
+            y.iter().for_each(|x| {
+                match x {
+                    None => {},
+                    Some(thing) => {
+                        let tuple = thing.get_js_info();
+                        temp_buffer[i*3] = tuple.0;
+                        temp_buffer[i*3+1] = tuple.1;
+                        temp_buffer[i*3+2] = tuple.2;
+                        i += 1;
+                    }
+                }
+            });
         });
         unsafe {
-            OUTPUT_BUFFER = temp_buffer;
+            crate::OUTPUT_BUFFER = temp_buffer;
         }
     }
 
@@ -40,6 +68,10 @@ impl Tiles {
         }
     }
 
+    pub fn click_tile(&mut self, x: usize, y: usize) {
+
+    }
+
     pub fn tick_frame(&mut self) {
         // TODO!
     }
@@ -51,6 +83,7 @@ enum WhichRow {
     Exact(usize),
 }
 
+#[allow(unused)]
 //find out what have been clicked
 impl Tiles {
     fn get_sum_of_rows(&self, y: usize) -> usize {
@@ -159,14 +192,3 @@ impl Tiles {
         return tiles;
     }
 }
-
-impl Default for Tiles {
-    fn default() -> Self {
-        Tiles (
-            vec![tile::Tile::default(); OUTPUT_BUFFER_SIZE/3]
-        )
-    }
-}
-
-
-

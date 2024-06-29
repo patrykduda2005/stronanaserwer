@@ -1,29 +1,37 @@
-import wasmInit, {Tiles} from '../rust/pkg/extermination.js'
+import wasmInit, {JsCommunicator} from '../rust/pkg/extermination.js'
+import { theHexagon } from './index.js';
 
 const rustWasm = await wasmInit("./rust/pkg/extermination_bg.wasm");
 const outputPointer = rustWasm.get_output_buffer_pointer();
 
 class WasmManager {
-    tiles;
-    mapWidth;
+    jsCommunicator;
 
     constructor() {
-        this.tiles = Tiles.new();
-        this.mapWidth = rustWasm.get_map_width();
+        this.jsCommunicator = JsCommunicator.new();
     }
 
     getWasmArray() {
-        this.tiles.tick_frame();
-        this.tiles.update_buffer();
+        this.jsCommunicator.tick_frame();
+        this.jsCommunicator.update_buffer();
         return new Uint8Array(rustWasm.memory.buffer, outputPointer, 3 * rustWasm.get_hex_amount());
     }
 
-    getMapWidth() {
-        return this.mapWidth;
+    getMapProperties() {
+        this.jsCommunicator.update_map();
+        return this.jsCommunicator.get_map_properties();
+    }
+
+    move_map(x, y) {
+        this.jsCommunicator.move_map(x, y);
+    }
+
+    scaleMap(scale) {
+        this.jsCommunicator.scale_map(scale);
     }
 
     clickEvent(mouseCoords, mapPosition, tileSize, mapHeight) {
-        this.tiles.click_event(mouseCoords.x, mouseCoords.y, mapPosition.x, mapPosition.y, tileSize.width, tileSize.height, mapHeight);
+        this.jsCommunicator.click_event(mouseCoords.x, mouseCoords.y, mapPosition.x, mapPosition.y, tileSize.width, tileSize.height, mapHeight);
     }
 }
 

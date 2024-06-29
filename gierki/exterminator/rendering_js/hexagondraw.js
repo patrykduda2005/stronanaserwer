@@ -6,29 +6,34 @@ export const ctx = canvas.getContext('2d');
 
 export class HexagonDraw {
     hexagonHeight;          //Height of a single small hexagon
-    hexagonWidth = 20;      //Width of a single small hexagon
+    hexagonWidth;      //Width of a single small hexagon
     hexagonXCount;          //amount of hexagons across X axis
     hexagonYCount;          //amount of hexagons across Y axis
-    bigHexagonWidth;        //width of entire map
-    bigHexagonHeight;       //height of entire map
     assets;                 //assetWalker
     coords;                 //coords of top-left point of hexagon
 
-    constructor(hexagonXCount) {
+    constructor() {
         return (async () => {
             this.assets = await new AssetsWalker();
-            this.hexagonXCount = wasmManager.getMapWidth();
-            this.hexagonYCount = this.hexagonXCount + 1;
+            let json = JSON.parse(wasmManager.getMapProperties());
+            this.hexagonXCount = json.hexDiameterCount.horizontal;
+            this.hexagonYCount = json.hexDiameterCount.vertical;
             this.updateParameters();
-            this.coords = this.getCenteredCoords();
+            console.log(json);
+            wasmManager.move_map(
+                (canvas.width - (this.hexagonWidth*this.hexagonXCount)) / 2,
+                (canvas.height - (this.hexagonHeight*this.hexagonYCount))/2
+            )
             return this;
         })();
     }
 
     updateParameters() {
-        this.hexagonHeight = this.hexagonWidth/1.73205080757*2;
-        this.bigHexagonWidth = this.hexagonXCount * this.hexagonWidth;
-        this.bigHexagonHeight = (this.hexagonXCount * this.hexagonHeight*3/4) + this.hexagonHeight;
+        let json = JSON.parse(wasmManager.getMapProperties());
+
+        this.coords = {x: json.mapPos.x, y: json.mapPos.y};
+        this.hexagonWidth = json.tileSize.width;
+        this.hexagonHeight = json.tileSize.height;
     }
 
     tintHexagon(x, y, tintColor) {
@@ -67,13 +72,6 @@ export class HexagonDraw {
         for (let i = 0; i < count; i++) {
             this.drawHexagon(x, y);
             x += this.hexagonWidth;
-        }
-    }
-
-    getCenteredCoords() {
-        return {
-            x: (canvas.width - this.bigHexagonWidth) / 2,
-            y: (canvas.height - this.bigHexagonHeight)/2,
         }
     }
 

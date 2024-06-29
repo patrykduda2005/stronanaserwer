@@ -9,36 +9,43 @@ export function get_output_buffer_pointer(): number;
 */
 export function get_hex_amount(): number;
 /**
-* @returns {number}
-*/
-export function get_map_width(): number;
-/**
 */
 export function tick_frame(): void;
 /**
 */
-export class Tiles {
+export class JsCommunicator {
   free(): void;
 /**
-* @returns {Tiles}
+* @returns {JsCommunicator}
 */
-  static new(): Tiles;
+  static new(): JsCommunicator;
 /**
 */
   update_buffer(): void;
 /**
 * @param {number} mouse_x
 * @param {number} mouse_y
-* @param {number} map_pos_x
-* @param {number} map_pos_y
-* @param {number} tile_width
-* @param {number} tile_height
-* @param {number} map_height
 */
-  click_event(mouse_x: number, mouse_y: number, map_pos_x: number, map_pos_y: number, tile_width: number, tile_height: number, map_height: number): void;
+  click_event(mouse_x: number, mouse_y: number): void;
 /**
 */
   tick_frame(): void;
+/**
+*/
+  update_map(): void;
+/**
+* @param {number} scale
+*/
+  scale_map(scale: number): void;
+/**
+* @returns {any}
+*/
+  get_map_properties(): any;
+/**
+* @param {number} x
+* @param {number} y
+*/
+  move_map(x: number, y: number): void;
 }
 
 export type InitInput = RequestInfo | URL | Response | BufferSource | WebAssembly.Module;
@@ -47,12 +54,15 @@ export interface InitOutput {
   readonly memory: WebAssembly.Memory;
   readonly get_output_buffer_pointer: () => number;
   readonly get_hex_amount: () => number;
-  readonly get_map_width: () => number;
-  readonly __wbg_tiles_free: (a: number) => void;
-  readonly tiles_new: () => number;
-  readonly tiles_update_buffer: (a: number) => void;
-  readonly tiles_click_event: (a: number, b: number, c: number, d: number, e: number, f: number, g: number, h: number) => void;
-  readonly tiles_tick_frame: (a: number) => void;
+  readonly __wbg_jscommunicator_free: (a: number) => void;
+  readonly jscommunicator_new: () => number;
+  readonly jscommunicator_update_buffer: (a: number) => void;
+  readonly jscommunicator_click_event: (a: number, b: number, c: number) => void;
+  readonly jscommunicator_tick_frame: (a: number) => void;
+  readonly jscommunicator_update_map: (a: number) => void;
+  readonly jscommunicator_scale_map: (a: number, b: number) => void;
+  readonly jscommunicator_get_map_properties: (a: number) => number;
+  readonly jscommunicator_move_map: (a: number, b: number, c: number) => void;
   readonly tick_frame: () => void;
 }
 
