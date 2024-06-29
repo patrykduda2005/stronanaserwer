@@ -13,3 +13,6 @@ export function jscommunicator_scale_map(a: number, b: number): void;
 export function jscommunicator_get_map_properties(a: number): number;
 export function jscommunicator_move_map(a: number, b: number, c: number): void;
 export function tick_frame(): void;
+export function __wbindgen_free(a: number, b: number, c: number): void;
+export function __wbindgen_malloc(a: number, b: number): number;
+export function __wbindgen_realloc(a: number, b: number, c: number, d: number): number;

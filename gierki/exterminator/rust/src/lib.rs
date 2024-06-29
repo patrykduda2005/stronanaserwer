@@ -1,3 +1,5 @@
+extern crate console_error_panic_hook;
+
 use wasm_bindgen::prelude::wasm_bindgen;
 
 const MAP_HOR_COUNT: usize = 8;
@@ -9,13 +11,11 @@ static mut OUTPUT_BUFFER: [u8; OUTPUT_BUFFER_SIZE] = [0; OUTPUT_BUFFER_SIZE];
 extern "C" {
     #[wasm_bindgen(js_namespace = console)]
     fn log(s: &str);
-    #[wasm_bindgen(js_namespace = console, js_name = assert)]
-    fn assert(b: bool, s: &str);
 }
 
 #[wasm_bindgen]
 pub fn get_output_buffer_pointer() -> *const u8 {
-    assert(MAP_HOR_COUNT % 2 == 0, "MAP_WIDTH must be even!!!");
+    std::panic::set_hook(Box::new(console_error_panic_hook::hook));
     assert!(MAP_HOR_COUNT % 2 == 0, "MAP_WIDTH must be even!!!");
     unsafe {
         OUTPUT_BUFFER.as_ptr()
