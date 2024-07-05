@@ -56,4 +56,5 @@ canvas.addEventListener('click', e =>  {
     const mouseCoords = convertViewport({x: e.clientX, y: e.clientY});
     console.log(mouseCoords);
     wasmManager.clickEvent(mouseCoords);
+    drawFrame();
 });

@@ -52,6 +52,8 @@ export type InitInput = RequestInfo | URL | Response | BufferSource | WebAssembl
 
 export interface InitOutput {
   readonly memory: WebAssembly.Memory;
+  readonly get_output_buffer_pointer: () => number;
+  readonly get_hex_amount: () => number;
   readonly __wbg_jscommunicator_free: (a: number) => void;
   readonly jscommunicator_new: () => number;
   readonly jscommunicator_update_buffer: (a: number) => void;
@@ -61,8 +63,6 @@ export interface InitOutput {
   readonly jscommunicator_scale_map: (a: number, b: number) => void;
   readonly jscommunicator_get_map_properties: (a: number) => number;
   readonly jscommunicator_move_map: (a: number, b: number, c: number) => void;
-  readonly get_output_buffer_pointer: () => number;
-  readonly get_hex_amount: () => number;
   readonly tick_frame: () => void;
   readonly __wbindgen_free: (a: number, b: number, c: number) => void;
   readonly __wbindgen_malloc: (a: number, b: number) => number;

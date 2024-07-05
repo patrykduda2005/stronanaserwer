@@ -77,6 +77,13 @@ export class HexagonDraw {
 
     draw({x, y} = this.coords) {
         this.assets.reset();
+        ctx.beginPath();
+        ctx.moveTo(this.coords.x, this.coords.y);
+        ctx.lineTo(this.coords.x + this.hexagonWidth*this.hexagonXCount, this.coords.y);
+        ctx.moveTo(this.coords.x, this.coords.y);
+        ctx.lineTo(this.coords.x, this.coords.y + this.hexagonYCount*this.hexagonHeight*3/4);
+        ctx.closePath();
+        ctx.stroke();
         x += this.hexagonWidth*this.hexagonXCount/4;
         let growDirection = 1;
         for (let count = this.hexagonXCount/2; count >= this.hexagonXCount/2; count += growDirection) {
