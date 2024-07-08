@@ -59,7 +59,13 @@ export class HexagonDraw {
 
     drawHexagon(x, y) {
         let texture = this.assets.getTexture();
+        //console.log(this.assets.getManPower());
         ctx.drawImage(texture, x, y, this.hexagonWidth, this.hexagonHeight * 1.3);
+        ctx.font = this.hexagonHeight * 3/4 + "px sans";
+        ctx.textAlign = "center";
+        let manPower = this.assets.getManPower();
+        if (manPower > 0)
+            ctx.fillText(manPower, x + this.hexagonWidth/2, y + this.hexagonHeight * 0.75, this.hexagonWidth);
         this.tintHexagon(x, y, this.assets.getColor());
         this.assets.next();
         //ctx.fillStyle = "#FFFFFF";

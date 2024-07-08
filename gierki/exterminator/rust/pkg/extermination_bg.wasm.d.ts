@@ -3,6 +3,7 @@
 export const memory: WebAssembly.Memory;
 export function get_output_buffer_pointer(): number;
 export function get_hex_amount(): number;
+export function get_array_components_amount(): number;
 export function __wbg_jscommunicator_free(a: number): void;
 export function jscommunicator_new(): number;
 export function jscommunicator_update_buffer(a: number): void;

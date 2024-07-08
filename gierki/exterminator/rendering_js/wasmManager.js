@@ -14,7 +14,11 @@ class WasmManager {
     getWasmArray() {
         this.jsCommunicator.tick_frame();
         this.jsCommunicator.update_buffer();
-        return new Uint8Array(rustWasm.memory.buffer, outputPointer, 3 * rustWasm.get_hex_amount());
+        return new Uint8Array(rustWasm.memory.buffer, outputPointer, rustWasm.get_array_components_amount() * rustWasm.get_hex_amount());
+    }
+
+    getArrayComponentsCount() {
+        return rustWasm.get_array_components_amount();
     }
 
     getMapProperties() {

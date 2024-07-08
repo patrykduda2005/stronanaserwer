@@ -9,6 +9,10 @@ export function get_output_buffer_pointer(): number;
 */
 export function get_hex_amount(): number;
 /**
+* @returns {number}
+*/
+export function get_array_components_amount(): number;
+/**
 */
 export function tick_frame(): void;
 /**
@@ -54,6 +58,7 @@ export interface InitOutput {
   readonly memory: WebAssembly.Memory;
   readonly get_output_buffer_pointer: () => number;
   readonly get_hex_amount: () => number;
+  readonly get_array_components_amount: () => number;
   readonly __wbg_jscommunicator_free: (a: number) => void;
   readonly jscommunicator_new: () => number;
   readonly jscommunicator_update_buffer: (a: number) => void;

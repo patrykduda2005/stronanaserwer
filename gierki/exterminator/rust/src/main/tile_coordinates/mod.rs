@@ -46,10 +46,12 @@ impl TileCoordinates {
             SlopesSide::Left => row -= 1,
             SlopesSide::Right => { column += 1; row -= 1 },
         }
-        return Some((column as usize + 12, row as usize));
+        log(format!("column: {}, row: {}", column, row).as_str());
+        return Some(((column + 2) as usize, row as usize));
     }
 
 
+    //does not work when hor_count/4 isn't a float
     fn in_which_square(&self, coords: (f32, f32)) -> (i32, i32) {
         let cell_height: f32 = self.map_descriptor.tile_size.1  * 0.75;
         let row: i32 = (coords.1 / cell_height) as i32;

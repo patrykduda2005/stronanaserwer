@@ -5,6 +5,7 @@ export class AssetsWalker {
     wasmArray;      //array of textures from Wasm
     loadedAssets;   //available assets
     colors;         //available colors
+    components_amount;
 
     constructor() {
         return (async () => {
@@ -18,6 +19,7 @@ export class AssetsWalker {
                 'green',
                 'blue',
             ];
+            this.components_amount = wasmManager.getArrayComponentsCount();
             return this;
         })();
     }
@@ -41,7 +43,7 @@ export class AssetsWalker {
     }
 
     next() {
-        this.index+=3;
+        this.index+=this.components_amount;
     }
 
     getTexture() {
@@ -50,6 +52,10 @@ export class AssetsWalker {
 
     getColor() {
         return this.colors[this.wasmArray[this.index+2]];
+    }
+
+    getManPower() {
+        return this.wasmArray[this.index+3];
     }
 
     updateWasmArray() {
