@@ -35,6 +35,16 @@ export class JsCommunicator {
 */
   tick_frame(): void;
 /**
+* @returns {number}
+*/
+  get_turn_number(): number;
+/**
+*/
+  advance_turn(): void;
+/**
+*/
+  update_client_state(): void;
+/**
 */
   update_map(): void;
 /**
@@ -64,14 +74,18 @@ export interface InitOutput {
   readonly jscommunicator_update_buffer: (a: number) => void;
   readonly jscommunicator_click_event: (a: number, b: number, c: number) => void;
   readonly jscommunicator_tick_frame: (a: number) => void;
+  readonly jscommunicator_get_turn_number: (a: number) => number;
+  readonly jscommunicator_advance_turn: (a: number) => void;
+  readonly jscommunicator_update_client_state: (a: number) => void;
   readonly jscommunicator_update_map: (a: number) => void;
   readonly jscommunicator_scale_map: (a: number, b: number) => void;
   readonly jscommunicator_get_map_properties: (a: number) => number;
   readonly jscommunicator_move_map: (a: number, b: number, c: number) => void;
   readonly tick_frame: () => void;
-  readonly __wbindgen_free: (a: number, b: number, c: number) => void;
   readonly __wbindgen_malloc: (a: number, b: number) => number;
   readonly __wbindgen_realloc: (a: number, b: number, c: number, d: number) => number;
+  readonly __wbindgen_exn_store: (a: number) => void;
+  readonly __wbindgen_free: (a: number, b: number, c: number) => void;
 }
 
 export type SyncInitInput = BufferSource | WebAssembly.Module;

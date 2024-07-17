@@ -81,6 +81,11 @@ export class HexagonDraw {
         }
     }
 
+    drawTurn() {
+        let turnNumber = wasmManager.getTurnNumber();
+        ctx.fillText("Turn: " + turnNumber, 100, 100, 100);
+    }
+
     draw({x, y} = this.coords) {
         this.assets.reset();
         ctx.beginPath();
@@ -98,5 +103,7 @@ export class HexagonDraw {
             y += this.hexagonHeight * 3/4;
             x -= this.hexagonWidth/2*growDirection;
         }
+        this.drawTurn();
     }
+
 }

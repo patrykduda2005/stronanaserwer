@@ -58,3 +58,11 @@ canvas.addEventListener('click', e =>  {
     wasmManager.clickEvent(mouseCoords);
     drawFrame();
 });
+
+function nextTurn() {
+    wasmManager.advanceTurn();
+    wasmManager.updateClientState();
+    drawFrame();
+}
+
+window.nextTurn = nextTurn;

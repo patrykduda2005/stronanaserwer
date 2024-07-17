@@ -9,6 +9,11 @@ class WasmManager {
 
     constructor() {
         this.jsCommunicator = JsCommunicator.new();
+        //this.updateClientState();
+    }
+
+    updateClientState() {
+        this.jsCommunicator.update_client_state();
     }
 
     getWasmArray() {
@@ -24,6 +29,14 @@ class WasmManager {
     getMapProperties() {
         this.jsCommunicator.update_map();
         return this.jsCommunicator.get_map_properties();
+    }
+
+    getTurnNumber() {
+        return this.jsCommunicator.get_turn_number();
+    }
+
+    advanceTurn() {
+        this.jsCommunicator.advance_turn();
     }
 
     move_map(x, y) {

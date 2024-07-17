@@ -4,6 +4,9 @@ use wasm_bindgen::{prelude::wasm_bindgen, JsValue};
 struct JsCommunicator {
     tiles: tiles::Tiles,
     coordinates_manager: tile_coordinates::TileCoordinates,
+    turns: turns::Turns,
+    player: player::Player,
+    server: server::ServerConnection,
 }
 
 #[allow(unused)]
@@ -14,6 +17,9 @@ impl JsCommunicator {
         JsCommunicator { 
             tiles: tiles::Tiles::new(tile_coordinates.map_descriptor.get_horizontal_diameter()),
             coordinates_manager: tile_coordinates,
+            turns: turns::Turns::new(),
+            player: player::Player::new(tiles::Color::Red),
+            server: server::ServerConnection::new(),
         }
     }
 
@@ -33,6 +39,23 @@ impl JsCommunicator {
 
     pub fn tick_frame(&mut self) {
         //TODO
+    }
+}
+
+//turns
+#[allow(unused)]
+#[wasm_bindgen]
+impl JsCommunicator {
+    pub fn get_turn_number(&self) -> u32 {
+        return self.turns.get_turn();
+    }
+    
+    pub fn advance_turn(&mut self) {
+        self.turns.advance_turn();
+    }
+    
+    pub fn update_client_state(&mut self) {
+        self.server.get_state();
     }
 }
 
@@ -59,3 +82,6 @@ impl JsCommunicator {
 
 mod tiles;
 mod tile_coordinates;
+mod turns;
+mod player;
+mod server;

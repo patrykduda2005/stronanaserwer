@@ -2,8 +2,14 @@ use core::panic;
 
 use crate::{log, ARRAY_COMPONENTS, MAP_HOR_COUNT};
 
+//Owner
+#[derive(Clone, Copy, Debug)]
+pub enum Color {
+    Red = 1,
+    Green = 2,
+    Blue = 3,
+}
 
-mod tile;
 
 pub struct Tiles(Vec<Vec<Option<tile::Tile>>>);
 
@@ -66,7 +72,7 @@ impl Tiles {
     fn change_color_at(&mut self, x: usize, y: usize) {
         match self.0[y][x].as_mut() {
             None => (),
-            Some(tile) => tile.change_color(Some(tile::Color::Blue))
+            Some(tile) => tile.change_color(Some(Color::Blue))
         }
     }
 
@@ -88,3 +94,4 @@ enum WhichRow {
     Exact(usize),
 }
 
+mod tile;

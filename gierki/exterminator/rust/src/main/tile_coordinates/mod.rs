@@ -47,7 +47,8 @@ impl TileCoordinates {
             SlopesSide::Right => { column += 1; row -= 1 },
         }
         log(format!("column: {}, row: {}", column, row).as_str());
-        return Some(((column + 2) as usize, row as usize));
+        let coord_offset: usize = (self.map_descriptor.hex_diameter_count.0 as f32/4.0).floor() as usize;
+        return Some(((column + coord_offset as i32) as usize, row as usize));
     }
 
 

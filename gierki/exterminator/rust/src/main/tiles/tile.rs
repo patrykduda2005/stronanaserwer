@@ -1,18 +1,13 @@
 use std::fmt::{Debug, Pointer};
 
 use crate::log;
-
-//Owner
-#[derive(Clone, Copy, Debug)]
-pub enum Color {
-    Red = 1,
-    Green = 2,
-    Blue = 3,
-}
+use super::Color;
 
 #[derive(Clone, Copy)]
-enum TileType {
-    Plains = 0,
+enum UpgradeType {
+    None = 0,
+    Upgraded = 1,
+    Capital = 2,
 }
 
 #[derive(Clone, Copy)]
@@ -22,7 +17,7 @@ pub struct Tile {
     man_power: u8,
     frame: u32,
     action_points_generation: u32,
-    r#type: TileType,
+    upgrade_type: UpgradeType,
 }
 
 impl Default for Tile {
@@ -33,7 +28,7 @@ impl Default for Tile {
             man_power: 0,
             frame: 0,
             action_points_generation: 1,
-            r#type: TileType::Plains,
+            upgrade_type: UpgradeType::None,
         }
     }
 }
@@ -45,7 +40,7 @@ impl Tile {
             None => 0,
         };
         return (
-            self.r#type as u8,
+            self.upgrade_type as u8,
             self.frame as u8,
             color_num,
             self.man_power as u8,
