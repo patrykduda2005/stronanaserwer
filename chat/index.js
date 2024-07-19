@@ -4,7 +4,7 @@ const ip = 'http://144.76.97.102:21330';
 const afterLoad = async () => {
     chatDiv = document.getElementById("chat");
     getData()
-
+    setInterval(getData, 5000);
 }
 
 async function getData() {
