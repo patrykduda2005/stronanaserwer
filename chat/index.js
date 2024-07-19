@@ -1,4 +1,6 @@
 let chatDiv;
+//const ip = 'http://localhost:9233';
+const ip = 'http://144.76.97.102:21330';
 const afterLoad = async () => {
     chatDiv = document.getElementById("chat");
     getData()
@@ -6,18 +8,31 @@ const afterLoad = async () => {
 }
 
 async function getData() {
-    fetch('http://144.76.97.102:21330')
+    fetch(ip)
         .then((res) => {
             res.text().then((data) => {
                 let bettData = data.split(']')[0];
                 bettData = bettData.substring(0, bettData.length-1);
                 bettData += "]}";
                 console.log(JSON.parse(bettData));
+                chatDiv.innerHTML = "";
                 JSON.parse(bettData).messages.forEach(line => {
                     chatDiv.innerHTML += "<h3>" + line.author + "</h3>";
                     chatDiv.innerHTML += line.message + "<br>";
                 })
             })
         })
+}
 
+function send() {
+    const nick = document.getElementById("author").value;
+    const message = document.getElementById("message").value;
+    if (!nick || !message) return;
+    fetch(ip, {
+        body: JSON.stringify({author: nick, message: message}),
+        method: "POST",
+    })
+        .then((res) => {
+
+        });
 }
