@@ -16,7 +16,7 @@ footer {
     width: calc(100% - 0.5em);
 }
 
-iframe {
+body > iframe {
     border: none;
     width: 100vw;
 }

@@ -4,21 +4,27 @@ const ip = 'https://vps.patrykduda.com:21330';
 const afterLoad = async () => {
     chatDiv = document.getElementById("chat");
     getData()
-    setInterval(getData, 5000);
+    setInterval(() => {
+        if (!document.getElementById("refresh").checked) return;
+        getData();
+    }, 5000);
+    document.getElementById("message").addEventListener('keypress', e => {
+        if (e.key == "Enter") {
+            e.preventDefault();
+            send();
+        }
+
+    });
 }
 
 async function getData() {
     fetch(ip)
         .then((res) => {
             res.text().then((data) => {
-                let bettData = data.split(']')[0];
-                bettData = bettData.substring(0, bettData.length-1);
-                bettData += "]}";
-                console.log(JSON.parse(bettData));
                 chatDiv.innerHTML = "";
-                JSON.parse(bettData).messages.forEach(line => {
-                    chatDiv.innerHTML += "<h3>" + line.author + "</h3>";
-                    chatDiv.innerHTML += line.message + "<br>";
+                data.split("\n").forEach(mess => {
+                    const split_mess = mess.split("~");
+                    chatDiv.innerHTML += "<h2>" + split_mess[1] + "</h2>" + "<p>" + split_mess[2] + "</p>" + "<br>";
                 })
             })
         })
@@ -29,10 +35,11 @@ function send() {
     const message = document.getElementById("message").value;
     if (!nick || !message) return;
     fetch(ip, {
-        body: JSON.stringify({author: nick, message: message}),
+        body: "~" + nick + "~" + message,
         method: "POST",
     })
         .then((res) => {
-
+            document.getElementById("message").value = "";
         });
 }
+
