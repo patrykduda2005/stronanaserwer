@@ -1,6 +1,6 @@
 let chatDiv;
 //const ip = 'http://localhost:9233';
-const ip = 'http://144.76.97.102:21330';
+const ip = 'https://vps.patrykduda.com:21330';
 const afterLoad = async () => {
     chatDiv = document.getElementById("chat");
     getData()
