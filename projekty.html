@@ -5,23 +5,123 @@
         <link rel="stylesheet" href="globalstyle.css">
         <link rel="stylesheet" href="stylepodstron.css">
         <script src="nav/resizeIframe.js"></script>
+        <base target="_blank">
         <meta charset="UTF-8">
+        <style>
+        h3 {
+            clear: both;
+        }
+        p {
+            padding-right: 20%;
+            padding-top: 1.5em;
+        }
+        img {
+        height: 5em;
+        float: left;
+        padding: 1em;
+        }
+        </style>
     </head>
     <body>
         <iframe src="nav/nav.html" scrolling="no"></iframe>
         <main>
             <h2>Tak zwane projekty programowania</h2>
             <hr>
-            <h3><a href="https://patrykduda2005.github.io/kromer/">Kromer</a></h3>
-            <p>Prosta platformówka 2d na przegladarce napisana w javascripcie za pomoca frameworka <a href="https://phaser.io/">phaser</a></p>
-            <h3><a href="https://github.com/patrykduda2005/pokoje_rust">Pokoje Rust</a></h3>
-            <p>Gra rozmieszczania znajomych po pokojach</p>
-            <h3><a href="https://github.com/patrykduda2005/2dasciigame">2AsciiGame</a></h3>
-            <p>Gra typu factorio ale mozna tworzyc mody za pomocą plików txt. Jest tez w trybie ascii. <a href="https://github.com/patrykduda2005/2dasciigame/releases/tag/alpha0.2">Wersja grywalna</a></p>
-            <h3><a href="./projekty/swieczki/">SWIECZKI</a></h3>
-            <p>(WIP)</p>
-            <h3><a href="gierki/exterminator/">Exterminator</a></h3>
-            <p>4X giereczka długoterminowa</p>
+
+            <h3>fWorek-backend
+                <sub><a href="https://github.com/patrykduda2005/fWorek-backend">[github]</a></sub>
+                <sub>[Październik 2024]</sub>
+            </h3>
+            <img src="./projekty/showcase-img/fworek.png">
+            <p>Backend w C do kopii dziennika, który ma mieć bardziej przejrzysty i bardziej uzupełniony UI niż oficjalny dziennik. Skupia sie na wyświetlaniu zapowiedzianych kartkówek itp</p>
+
+            <h3>Unlocker
+                <sub><a href="https://github.com/patrykduda2005/unlocker">[github]</a></sub>
+                <sub>[Sierpień 2024]</sub>
+            </h3>
+            <img src="./projekty/showcase-img/unlocker.png">
+            <p>Sklecony w tydzień datapack na planowany od wielu miesięcy serwer minecraft. Totalna wtopa administracyjna, ale datapack nawet ok</p>
+
+            <h3>Chat server
+                <sub><a href="./chat.html">[strona]</a></sub>
+                <sub>[Lipiec 2024]</sub>
+            </h3>
+            <img src="./projekty/showcase-img/chat.png">
+            <p>Projekt by szybko nauczyć sie podstaw robienia serwera w C. Ku nikogo zaskoczeniu jest to sklejone trytytkami i kropelką przez co co chwile crashuje.</p>
+
+            <h3>Exterminator
+                <sub><a href="./gierki/exterminator/index.html">[strona]</a></sub>
+                <sub>[Lipiec 2024]</sub>
+            </h3>
+            <img src="./projekty/showcase-img/exterminator.png">
+            <p>THE gra. Nie zamierzam porzucić tego projektu dopóki go nie skończe; teraz jest po prostu przerwa.. Jest to <a href="https://pl.wikipedia.org/wiki/4X">4X</a> gra typu co robi <a href="https://www.paradoxinteractive.com/our-games/discover">Paradox</a>, która wykorzystuje w stacku JS, Rust + WASM i C na backendzie</p>
+
+            <h3>Świeczki
+                <sub><a href="./projekty/swieczki/index.html">[strona]</a></sub>
+                <sub>[Czerwiec 2024]</sub>
+            </h3>
+            <img src="./projekty/showcase-img/swieczki.png">
+            <p>Projekt na poznanie WASM. Zainspirowałem się elektrycznymi świeczkami w kościele i chciałem sprawdzić czy można na nich zrobić jakąś animacje</p>
+
+            <h3>Techquest
+                <sub><a href="https://github.com/patrykduda2005/techquest">[github]</a></sub>
+                <sub>[Kwiecień 2024]</sub>
+            </h3>
+            <img src="./projekty/showcase-img/techquest.png">
+            <p>Pierwszy hackaton w moim technikum. Dobry pomysł ale wygląd i prezentacja mówiona to porażka</p>
+
+            <h3>Fow-demo
+                <sub><a href="https://github.com/patrykduda2005/fow-demo">[github]</a></sub>
+                <sub>[Listopad 2023]</sub>
+            </h3>
+            <img src="./projekty/showcase-img/fow-demo.png">
+            <p>Próba zrobienia gierki w "normalnym" game engine'ie (tutaj: <a href="https://godotengine.org/">godot</a>). Gra miała polegać na 2d widoku z góry horror fnaf typeshit</p>
+
+            <h3>Strona patrykduda.com
+                <sub><a href="https://github.com/patrykduda2005/stronanaserwer">[github]</a></sub>
+                <sub><a href="https://patrykduda.com/">[strona]</a></sub>
+                <sub>[Lipiec 2023]</sub>
+            </h3>
+            <img src="./projekty/showcase-img/patrykduda.png">
+            <p><a href="https://www.youtube.com/watch?v=bdKZVIGRAKQ">Gadająca głowa</a> na youtube'ie zainspirowała mnie do stworzenia własnej strony internetowej. Strona w zamyśle ma być elegancka i wykorzystująca javascripta w ostateczności</p>
+
+            <h3>2dasciigame
+                <sub><a href="https://github.com/patrykduda2005/2dasciigame">[github]</a></sub>
+                <sub>[Czerwiec 2023]</sub>
+            </h3>
+            <img src="./projekty/showcase-img/2dasciigame.png">
+            <p>Próba <a href="https://www.factorio.com/">faktorio</a>, ale którego łatwo modować i działa w konsoli. Pokonało mnie komunikacja między klasami i implementacja conveyor belt'ów</p>
+
+            <h3>Pokoje Rust
+                <sub><a href="https://github.com/patrykduda2005/pokoje_rust">[github]</a></sub>
+                <sub>[Maj 2023]</sub>
+            </h3>
+            <img src="./projekty/showcase-img/pokoje-rust.png">
+            <p>Projekt na nauczenie się języka programowania Rust. Jest to "gra" tekstowa pełna inside joke'ów w mojej grupie kolegów</p>
+
+            <h3>Watykanhell
+                <sub><a href="https://github.com/patrykduda2005/watykanhell">[github]</a></sub>
+                <sub><a href="https://patrykduda2005.github.io/watykanhell">[strona]</a></sub>
+                <sub>[Maj 2022]</sub>
+            </h3>
+            <img src="./projekty/showcase-img/watykanhell.png">
+            <p>Próba roguelike'a i kolaboracji z kolegami w pisaniu razem projektu. Totalna klapa</p>
+
+            <h3>Kromer
+                <sub><a href="https://github.com/patrykduda2005/kromer">[github]</a></sub>
+                <sub><a href="https://patrykduda2005.github.io/kromer">[strona]</a></sub>
+                <sub>[Styczeń 2022]</sub>
+            </h3>
+            <img src="./projekty/showcase-img/kromer.png">
+            <p>Pierwszy projekt z programowania. Wybrałem <a href="https://phaser.io/">phaser'a</a> w javascripcie, gdyż powinien być dobry na początek i koledzy nie muszą nic pobierać by zagrać</p>
+
+            <h3>Custom Origins 
+                <sub><a href="https://github.com/patrykduda2005/mcdatapack-custom_origins">[github]</a></sub>
+                <sub>[Grudzień 2021]</sub>
+            </h3>
+            <img src="./projekty/showcase-img/custom-origins.png" >
+            <p>Datapack (jakby mod do minecrafta) inspirowany popularnym modem "<a href="https://www.curseforge.com/minecraft/mc-mods/origins">Origins</a>". Wymyślany na lekcjach polskiego i wykorzystany na największym hostowanym serwerze tego czasu dla znajomych</p>
+
         </main>
     </body>
 </html>
