@@ -1,5 +1,7 @@
 body {
-    background-color: #2B2A33;
+    /*background-color: #2B2A33;*/
+    background-color: #aaaaaa;
+    background-blend-mode: multiply;
 }
 
 header {
