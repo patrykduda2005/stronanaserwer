@@ -6,6 +6,28 @@
         <link rel="stylesheet" href="stylepodstron.css">
         <script src="nav/resizeIframe.js"></script>
         <meta charset="UTF-8">
+        <style>
+        body{
+        overflow-y: hidden;
+        }
+        div#cover {
+        z-index: 100;
+        position: absolute;
+        width: 90vw;
+        margin-left: 5vw;
+        transform: skew(-5deg);
+        height: 100%;
+        background-color: #ffff0000;
+        top: 200px;
+
+        animation-name: move;
+        animation-duration: 3s;
+        }
+        @keyframes move {
+            from {background-color: #ffff00ff; top: 200px;}
+            to {top: 1000px;}
+        }
+        </style>
         <script>
         window.onload = function wiek() {
             document.getElementById("wiek").innerHTML += (new Date().getFullYear() - 2005) + " lat";
@@ -14,6 +36,7 @@
     </head>
     <body>
         <iframe src="nav/nav.html" scrolling="no"></iframe>
+        <div id="cover"></div>
         <main style="display: flex;">
             <div style="flex: 2;">
                 <div>

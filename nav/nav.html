@@ -5,22 +5,80 @@
         <link rel="stylesheet" href="../globalstyle.css">
         <link rel="stylesheet" href="navstyle.css">
         <meta charset="UTF-8">
+        <style>
+        a#red {
+        background-color: red;
+        }
+        a#purple {
+        background-color: purple;
+        }
+        a#blue {
+        background-color: blue;
+        }
+        a#green {
+        background-color: green;
+        }
+        a#magenta {
+        background-color: magenta;
+        }
+        a#orange {
+        background-color: orange;
+        }
+        </style>
     </head>
     <body>
         <header>
             <a id="naglowek" href="../index.html" target="_parent">Strona Dudy</a>
+            <!--
             <img id="hamburger" alt="hamburger" src="hamburger.png" onclick="toggleNav()">
+            -->
         </header>
+        <svg
+           preserveAspectRatio="none" 
+           width="209.981mm"
+           height="27.873648mm"
+           viewBox="0 0 209.981 27.873648"
+           version="1.1"
+           id="svg1"
+           xmlns="http://www.w3.org/2000/svg"
+           xmlns:svg="http://www.w3.org/2000/svg">
+          <defs
+             id="defs1" />
+          <g
+             id="layer1"
+             transform="translate(-0.07253622,-85.735031)">
+            <rect
+               style="opacity:1;fill:#eeee00;fill-opacity:1;stroke-width:0.264999;stroke-dasharray:none"
+               id="rect2"
+               width="97.565315"
+               height="27.160877"
+               x="0"
+               y="85.735031"
+               rx="10"
+               ry="10" />
+            <path
+               style="opacity:1;fill:#ffff00;fill-opacity:1;stroke-width:0.339516;stroke-dasharray:none"
+               id="rect1"
+               width="209.981"
+               height="20.913343"
+               x="0"
+               y="100.86792"
+               d="M 5.567487,100.86792 H 204.49505 a 5.5584924,5.5584924 45 0 1 5.55849,5.55849 v 15.35485 H 0.07253622 V 106.36287 A 5.4949508,5.4949508 135 0 1 5.567487,100.86792 Z"
+               transform="matrix(1,0,0,0.60921663,0,39.417506)" />
+          </g>
+        </svg>
+
         <nav>
             <span class="edge"></span>
-            <a href="../teorie.html" target="_parent">Teorie</a>
-            <a href="../projekty.html" target="_parent">Projekty</a>
-            <a href="../przemyslenia.html" target="_parent">Przemyślenia</a>
-            <a href="../gierki.html" target="_parent">Gierki</a>
-            <a href="../chat.html" target="_parent">Chat</a>
-            <a href="../pokoj.html" target="_parent">Pokój w Internecie</a>
+            <a href="../teorie.html" target="_parent" id="red">Teorie</a>
+            <a href="../projekty.html" target="_parent" id="purple">Projekty</a>
+            <a href="../przemyslenia.html" target="_parent" id="blue">Przemyślenia</a>
+            <a href="../gierki.html" target="_parent" id="green">Gierki</a>
+            <a href="../chat.html" target="_parent" id="magenta">Chat</a>
+            <a href="../pokoj.html" target="_parent" id="orange">Pokój w Internecie</a>
             <span class="edge"></span>
         </nav>
+        <div id="topoffolder"></div>
         <script>
         function toggleNav() {
             let nav = document.querySelector("nav");
@@ -57,7 +115,8 @@
             }
             if (button == null) return;
             let backgroundColor = getComputedStyle(parent.document.body).backgroundColor;
-            let style = (window.screen.width > 700 ? "border-width: 1px 1px 0px 1px;" : "") + "background-color: " + backgroundColor + ";";
+            let style = "border-top-right-radius: 30px;";
+            //let style = (window.screen.width > 700 ? "border-width: 1px 1px 0px 1px;" : "") + "background-color: " + "transparent" + ";";
             button.style = style;
         }
         changeButtonShape();

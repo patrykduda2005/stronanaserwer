@@ -1,14 +1,42 @@
 body {
     background-color: #25242C;
+    position: relative;
+}
+
+main:before {
+    content: "";
+    background-color: yellow;
+    /*background-image: url("./background-paper-tile.png");
+    display: inline;
+    position: absolute;
+    width: 90vw;
+    border-radius: 40px;
+    height: calc(100% - 10px);
+    top: 0px;
+    left: 5vw;*/
 }
 
 main {
-    width: 70vw;
-    margin-left: 15vw;
+    width: 80vw;
+    margin-left: calc( 5vw - 10px );
+    margin-right: 5vw;
+    margin-top: -40px;
     margin-bottom: 5em;
+    background-image: url("./background-paper-tile.png");
+    border-radius: 40px;
+    border: 10px #FFFF00 solid;
+    border-top-width: 10px; 
+    padding: 2em 5vw 2em 5vw;
+    /*min-height: 100vh;*/
+}
+
+main * {
+    z-index: 10;
+    position: relative;
 }
 
 footer {
+    z-index: 11;
     background-color: #2B2A33;
     position: fixed;
     padding: 0.25em;
@@ -19,6 +47,8 @@ footer {
 body > iframe {
     border: none;
     width: 100vw;
+    position: relative;
+    z-index: 1;
 }
 
 h2, h3  {
