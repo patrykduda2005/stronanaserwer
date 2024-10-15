@@ -1,18 +1,48 @@
 body {
     /*background-color: #2B2A33;*/
-    background-color: #aaaaaa;
-    background-blend-mode: multiply;
+    /*background-color: #aaaaaa;*/
+    /*background-blend-mode: multiply;*/
+    background-color:transparent
 }
 
+/*div#topoffolder {
+    width: calc(90vw + 20px);
+    margin-left: calc(5vw - 10px);
+    position: absolute;
+    top: 3.5rem;
+    bottom: 0;
+    z-index: -21;
+    background-color: yellow;
+}*/
+
 header {
+    /*background-color: #2B2A33;*/
     text-align: center;
     vertical-align: middle;
+}
+
+#svg1 {
+    position: absolute;
+    z-index: -1;
+    width: calc(90vw + 20px);
+    margin-left: calc(5vw - 10px);
+}
+
+img#svg_folder {
+    width: 100%;
+    height: 3em;
+    
 }
 
 header #naglowek {
     font-size: 3.3rem;
     color: var(--header-color);
     text-decoration: none;
+    transition: zoom 0.5s;
+}
+
+header #naglowek:hover {
+    zoom:1.1;
 }
 
 #hamburger {
@@ -26,35 +56,49 @@ header #naglowek {
 }
 
 nav {
-    display: none;
+    margin-top: 20px;
+    display: flex;
+    width: 80vw;
+    margin-left: 10vw;
 }
 
 nav .edge {
-    border-width: 0px 0px 1px 0px;
+    border-width: 0px 0px 0px 0px;
     border-color: var(--secondary-header-color);
     border-style: solid;
-    flex: 1;
-    width: 1.98rem;
+    flex: 0;
 }
 
 nav a {
+    background-color: black;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    /*background-image: url("../background-paper-tile.png");*/
     padding: 0.5rem;
+    margin-left: 2em;
+    min-height: 3.5em;
     flex: 15;
     border-style: solid;
-    border-width: 1px;
+    border-width: 0px;
     border-color: var(--secondary-header-color);
     color: var(--secondary-header-color);
+    color: black;
     text-decoration: none;
     align-items: center;
     display: flex;
     justify-content: center;
+    transition: border-top-right-radius 1s, flex 0.5s;
+    /*mix-blend-mode: screen;*/
 }
 
 nav a:hover {
-    border-color: #FF7B0E;
+    /*border-color: #FF7B0E;*/
+    flex: 20;
 }
 
-@media only screen and (max-device-width: 700px) {
+
+
+/*@media only screen and (max-device-width: 700px) {
     nav {
         flex-flow: column;
         height: unset;
@@ -67,4 +111,4 @@ nav a:hover {
     nav .edge {
         display: none;
     }
-}
+}*/
