@@ -74,7 +74,7 @@ nav a {
     border-top-right-radius: 5px;
     border-top-left-radius: 5px;
     /*background-image: url("../background-paper-tile.png");*/
-    padding: 0.5rem;
+    padding: 0rem;
     margin-left: 2em;
     min-height: 3.5em;
     flex: 15;
@@ -87,13 +87,15 @@ nav a {
     align-items: center;
     display: flex;
     justify-content: center;
-    transition: border-top-right-radius 1s, flex 0.5s;
+    transition: border-top-right-radius 1s, padding-top 0.5s;
+    /*transition: border-top-right-radius 1s, flex 0.5s;*/
     /*mix-blend-mode: screen;*/
 }
 
 nav a:hover {
     /*border-color: #FF7B0E;*/
-    flex: 20;
+    /*flex: 20;*/
+    padding-top: 1.0em;
 }
 
 
