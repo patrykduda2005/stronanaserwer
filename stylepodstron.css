@@ -128,3 +128,7 @@ form {
 textarea, input {
     margin: 0.25em;
 }
+
+.highlight {
+    color: var(--header-color);
+}
